@@ -22,15 +22,24 @@ public class ClanCommand implements CommandExecutor {
         if (label.equalsIgnoreCase("clan") || label.equalsIgnoreCase("clans")) {
             if(instance.getConfig().getString("Clans Enabled").equals("true")) {
                 Player player = (Player) sender;
-                if (player.hasPermission("hubplus.clans")) {
+                if (player.hasPermission("hubplus.clan")) {
                     if (args.length == 0) {
                         player.sendMessage(ChatColor.AQUA + "Clans Beta, Provided as part of Hub Plus.");
                     } else {
                         if (args[0].equalsIgnoreCase("info")) {
-                            if (player.hasPermission("hubsplus.clans.info")) {
-                                if( args.length == 2 ){
-                                    if (player.hasPermission("hubsplus.clans.info.other")) {
-                                        String clanName = args[1];
+                            if (player.hasPermission("hubplus.clan.info")) {
+                                if( args.length >= 2 ){
+                                    if (player.hasPermission("hubplus.clan.info.other")) {
+                                        //String clanName = args[1];
+                                        StringBuilder builder = new StringBuilder();
+                                        Integer i = 0;
+                                        for (String value : args) {
+                                            if( i != 0 ) {
+                                                builder.append(value).append(" ");
+                                            }
+                                            i = i + 1;
+                                        }
+                                        String clanName = builder.toString();
                                         if (clanName == null || getPoints(clanName) == null) {
                                             player.sendMessage(ChatColor.AQUA + "That clan does not exist!");
                                         } else {
@@ -49,13 +58,17 @@ public class ClanCommand implements CommandExecutor {
                                     if (clanName == null) {
                                         player.sendMessage(ChatColor.AQUA + "You are not part of a clan!");
                                     } else {
+                                        String owner = getOwner(clanName);
+                                        String uuid = String.valueOf(player.getUniqueId());
                                         player.sendMessage(ChatColor.AQUA + "====== Clan Info ======");
                                         player.sendMessage(ChatColor.AQUA + "Name: " + clanName);
                                         player.sendMessage(ChatColor.AQUA + "Points: " + getPoints(clanName));
                                         player.sendMessage(ChatColor.AQUA + "Created: " + getCreated(clanName));
                                         player.sendMessage(ChatColor.AQUA + "Members: " + getClanMembersCount(clanName) + "/" + instance.getConfig().getInt("Clan Member Limit"));
-                                        // Things to be added soon!
-                                        //player.sendMessage(ChatColor.AQUA + "Owner: Unknown!");
+
+                                        if (owner.equals(uuid)) {
+                                            player.sendMessage(ChatColor.AQUA + "You are the clan owner!");
+                                        }
                                         //player.sendMessage(ChatColor.AQUA + "Level: Coming Soon!");
                                     }
                                 }
@@ -89,18 +102,28 @@ public class ClanCommand implements CommandExecutor {
                                 }
                             }
                         } else if (args[0].equalsIgnoreCase("create")) {
-                            if( player.hasPermission("hubsplus.clans.create")) {
+                            if( player.hasPermission("hubplus.clan.create")) {
                                 if (args.length == 1) {
                                     player.sendMessage(ChatColor.AQUA + "/clan create <name>");
                                 } else {
-                                    String name = args[1];
+                                    StringBuilder builder = new StringBuilder();
+                                    Integer i = 0;
+                                    for (String value : args) {
+                                        if( i != 0 ) {
+                                            builder.append(value).append(" ");
+                                        }
+                                        i = i + 1;
+                                    }
+                                    String name = builder.toString();
                                     createClan(name, player);
+                                    Integer points = instance.getConfig().getInt("Clan Starting Points");
+                                    givePoints(player, points); // Gives points on clan creation!
                                 }
                             } else {
                                 HubPlus.noPerms(player);
                             }
                         } else if( args[0].equalsIgnoreCase("join")){
-                            if( player.hasPermission("hubsplus.clans.join")) {
+                            if( player.hasPermission("hubplus.clan.join")) {
                                 if (args.length == 1) {
                                     player.sendMessage(ChatColor.AQUA + "/clan join <name>");
                                 } else {
@@ -428,7 +451,9 @@ public class ClanCommand implements CommandExecutor {
 
     private Boolean givePoints(Player player, Integer points){
         // MySQL to give points to the players clan
-        // NOT COMPLETED! DO NOT USE THIS FUNCTION!
+        String clanname = getClan(player);
+        Integer currentpoints = getPoints(clanname);
+        Integer newpoints = currentpoints + points;
 
         Statement statement = null;
         try {
@@ -439,10 +464,43 @@ public class ClanCommand implements CommandExecutor {
 
         try {
             assert statement != null;
-            statement.executeUpdate("UPDATE HubPlus_Clans SET points = " + points + ";");
+            statement.executeUpdate("UPDATE HubPlus_Clans SET points = " + newpoints + " WHERE name = '" + clanname + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return false;
+    }
+
+    private Boolean takePoints(Player player, Integer points){
+        // MySQL to take points from the players clan
+        String clanname = getClan(player);
+        Integer currentpoints = getPoints(clanname);
+        Integer newpoints = currentpoints - points;
+
+        if( points > currentpoints ){
+
+        } else {
+            Statement statement = null;
+            try {
+                statement = HubPlus.getConnection().createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                assert statement != null;
+                statement.executeUpdate("UPDATE HubPlus_Clans SET points = " + newpoints + " WHERE name = '" + clanname + "';");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    private Boolean listClans(Player player){
+        // Adding soon
 
         return false;
     }

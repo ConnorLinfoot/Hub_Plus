@@ -1,5 +1,6 @@
 #                           Hub Plus
-#                         Version 0.4b1
+#                          Version 0.4
+#                     THIS IS A ALPHA BUILD
 #                       By Connor Linfoot
 # Please read the documentation available at the link below!
 # http://dev.bukkit.org/bukkit-plugins/hub-plus/
@@ -17,9 +18,13 @@ Broadcast Prefix: "[HubPlus]"
 Custom Hub Command: lobby
 Disable Plugins Command: false
 Firework Cooldown: 15
+Launch Pads: enabled
+Launch Pads Bottom Block: Redstone Block
+Launch Pads Top Block: Stone Plate
 
 Clans Enabled: false
 Clan Member Limit: 8
+Clan Starting Points: 100
 Database Host: localhost
 Database User: user
 Database Pass: pass

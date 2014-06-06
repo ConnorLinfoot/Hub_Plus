@@ -5,6 +5,7 @@ import com.connorlinfoot.hubplus.Commands.*;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
 import com.connorlinfoot.hubplus.Player.BloodEffect;
+import com.connorlinfoot.hubplus.Player.LaunchPads;
 import com.connorlinfoot.hubplus.Player.PlayerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -93,6 +94,11 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
 
+
+        if(getConfig().getString("Launch Pads").equals("enabled")){
+            Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
+        }
+
         // Include Command Classes
         getCommand("hub").setExecutor(new HubCommand()); // /hub command
         getCommand("hubplus").setExecutor(new HubPlusCommand()); // /HubPlus command
@@ -105,7 +111,7 @@ public class HubPlus extends JavaPlugin implements Listener {
         getCommand("heal").setExecutor(new HealCommand()); // /heal command
 
         console.sendMessage(ChatColor.GREEN + "============= HUB PLUS =============");
-        console.sendMessage(ChatColor.GREEN + "========== VERSION: 0.4b3 ==========");
+        console.sendMessage(ChatColor.GREEN + "=========== VERSION: 0.4 ===========");
         console.sendMessage(ChatColor.GREEN + "======== BY CONNOR LINFOOT! ========");
     }
 

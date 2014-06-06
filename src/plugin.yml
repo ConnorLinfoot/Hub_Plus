@@ -1,7 +1,7 @@
 name: Hub Plus
 description: Hub
 main: com.connorlinfoot.hubplus.HubPlus
-version: 0.4.0.3
+version: 0.4
 commands:
   hubplus:
     description: HubPlus Main Command
@@ -62,4 +62,19 @@ permissions:
     default: op
   hubplus.fw:
     description: Access to /fw command
+    default: op
+  hubplus.clan:
+    description: Access to /clan command
+    default: op
+  hubplus.clan.info:
+    description: Access to /clan info command
+    default: op
+  hubplus.clan.info.other:
+    description: Access to /clan info <clan name> command
+    default: op
+  hubplus.clan.create:
+    description: Access to /clan create command
+    default: op
+  hubplus.clan.join:
+    description: Access to /clan join command
     default: op
