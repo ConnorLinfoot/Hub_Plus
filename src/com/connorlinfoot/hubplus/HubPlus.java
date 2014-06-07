@@ -148,6 +148,9 @@ public class HubPlus extends JavaPlugin implements Listener {
         getCommand("fw").setExecutor(new FireworkCommand()); // /fw command
         getCommand("fly").setExecutor(new FlyCommand()); // /fly command
         getCommand("heal").setExecutor(new HealCommand()); // /heal command
+        getCommand("gmc").setExecutor(new GameModeCommands()); // /gmc command
+        getCommand("gms").setExecutor(new GameModeCommands()); // /gms command
+        getCommand("gma").setExecutor(new GameModeCommands()); // /gma  command
 
         console.sendMessage(ChatColor.GREEN + "============= HUB PLUS =============");
         console.sendMessage(ChatColor.GREEN + "=========== VERSION: 0.5 ===========");

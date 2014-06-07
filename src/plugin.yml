@@ -24,7 +24,13 @@ commands:
   heal:
     description: Heal command
   friend:
-    description: Freind command
+    description: Friend command
+  gmc:
+    description: Creative Mode command
+  gms:
+    description: Survival Mode command
+  gma:
+    description: Adventure Mode command
 permissions:
   hubplus.hub:
     description: Allow users to use /hub command
@@ -82,4 +88,13 @@ permissions:
     default: op
   hubplus.ride:
     description: Allow a player to right click another player to ride
+    default: op
+  hubplus.gamemode.creative:
+    description: Access to /gmc command
+    default: op
+  hubplus.gamemode.survival:
+    description: Access to /gms command
+    default: op
+  hubplus.gamemode.adventure:
+    description: Access to /gma command
     default: op
