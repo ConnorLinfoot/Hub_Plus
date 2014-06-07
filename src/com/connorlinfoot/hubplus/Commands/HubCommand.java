@@ -1,7 +1,7 @@
 package com.connorlinfoot.hubplus.Commands;
 
 import com.connorlinfoot.hubplus.Global.HubFunction;
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,7 +27,7 @@ public class HubCommand implements CommandExecutor {
                         player.sendMessage("Please use /hubplus help");
                     }
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }

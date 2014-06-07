@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Player;
 
-import com.connorlinfoot.hubplus.Global.ChatColor;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class Rider implements Listener {
                     //Entity riderentity = player.getPassenger();
                     //if (rider.equals("null")) { // Used for having 2 players riding! Seems to currently cause server crash?
                     player.setPassenger(entity);
-                    ((Player) entity).sendMessage(ChatColor.getChatColor() + "You are now riding " + player.getDisplayName() + " (Use shift to dismount)");
+                    ((Player) entity).sendMessage(Messages.getChatColor() + "You are now riding " + player.getDisplayName() + " (Use shift to dismount)");
                     //} else {
                         //riderentity.setPassenger(entity);
                     //}

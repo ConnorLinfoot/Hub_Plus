@@ -1,7 +1,7 @@
 package com.connorlinfoot.hubplus;
 
 import com.connorlinfoot.hubplus.Global.HubFunction;
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -25,7 +25,7 @@ public class SignListener implements Listener {
                 player.sendMessage( "You have just created a Hub TP Sign" );
             } else {
                 event.setLine( 0, ChatColor.RED + "[HubPlus]"  );
-                NoPermsFunction.noPerms(player);
+                Messages.noPerms(player);
             }
         }
     }
@@ -46,7 +46,7 @@ public class SignListener implements Listener {
                         HubFunction.goToHub(player);
                     }
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }

@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -53,14 +53,14 @@ public class HubPlusCommand implements CommandExecutor {
                             instance.saveConfig();
                             player.sendMessage(ChatColor.GREEN + "Hub Point Set!");
                         } else {
-                            NoPermsFunction.noPerms(player);
+                            Messages.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "reload" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
                             instance.reloadConfig();
                             player.sendMessage( "Hub Plus Config Reloaded!" );
                         } else {
-                            NoPermsFunction.noPerms(player);
+                            Messages.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "stats" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
@@ -77,7 +77,7 @@ public class HubPlusCommand implements CommandExecutor {
                                 player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus stats <enable/disable>" );
                             }
                         } else {
-                            NoPermsFunction.noPerms(player);
+                            Messages.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "clockcooldown" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
@@ -91,11 +91,11 @@ public class HubPlusCommand implements CommandExecutor {
                                 player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus clockcooldown <seconds>" );
                             }
                         } else {
-                            NoPermsFunction.noPerms(player);
+                            Messages.noPerms(player);
                         }
                     }
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }

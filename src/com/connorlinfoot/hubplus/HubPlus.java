@@ -3,7 +3,7 @@ package com.connorlinfoot.hubplus;
 import com.connorlinfoot.hubplus.Clans.ClanCommand;
 import com.connorlinfoot.hubplus.Commands.*;
 import com.connorlinfoot.hubplus.Friends.FriendCommand;
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
 import com.connorlinfoot.hubplus.Player.BloodEffect;
@@ -168,7 +168,7 @@ public class HubPlus extends JavaPlugin implements Listener {
                 String world = player.getWorld().getName().toLowerCase();
                 player.sendMessage("Current World: " + ChatColor.RED + ChatColor.BOLD + world);
             } else {
-                NoPermsFunction.noPerms(player);
+                Messages.noPerms(player);
             }
         }
 

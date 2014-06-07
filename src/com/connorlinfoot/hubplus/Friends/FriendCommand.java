@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Friends;
 
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,47 +23,47 @@ public class FriendCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (player.hasPermission("hubplus.friend")) {
                     if (args.length == 0) {
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "=== Friends Beta, Provided as part of Hub Plus ===");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend add <player> - Send a friend request");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend accept <player> - Accept friend request");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend deny <player> - Deny friend request");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend remove <player> - Remove a friend");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend list - View all your friends");
+                        player.sendMessage(Messages.getChatColor() + "=== Friends Beta, Provided as part of Hub Plus ===");
+                        player.sendMessage(Messages.getChatColor() + "/friend add <player> - Send a friend request");
+                        player.sendMessage(Messages.getChatColor() + "/friend accept <player> - Accept friend request");
+                        player.sendMessage(Messages.getChatColor() + "/friend deny <player> - Deny friend request");
+                        player.sendMessage(Messages.getChatColor() + "/friend remove <player> - Remove a friend");
+                        player.sendMessage(Messages.getChatColor() + "/friend list - View all your friends");
                     } else {
                         if (args[0].equalsIgnoreCase("add")) {
                             if (player.hasPermission("hubplus.friend.add")) {
                                 if( args.length < 2){
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/friend add <player>");
+                                    player.sendMessage(Messages.getChatColor() + "/friend add <player>");
                                 } else {
                                     Player p = instance.getServer().getPlayer(args[1]);
                                     if (p == null) {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Player not found!");
+                                        player.sendMessage(Messages.getChatColor() + "Player not found!");
                                     } else {
                                         if( addFriend(player, p) ) {
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have invited " + p.getDisplayName() + " to be your friend!");
-                                            p.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + " has invited you to be their friend!");
-                                            p.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Do /friend accept " + player.getDisplayName() + ", if you wish to add them!");
+                                            player.sendMessage(Messages.getChatColor() + "You have invited " + p.getDisplayName() + " to be your friend!");
+                                            p.sendMessage(Messages.getChatColor() + " has invited you to be their friend!");
+                                            p.sendMessage(Messages.getChatColor() + "Do /friend accept " + player.getDisplayName() + ", if you wish to add them!");
                                         }
                                     }
                                 }
                             } else {
-                                NoPermsFunction.noPerms(player);
+                                Messages.noPerms(player);
                             }
                         } else if (args[0].equalsIgnoreCase("list")) {
                             if (player.hasPermission("hubplus.friend.list")) {
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "=== My Friends ===");
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "- Friend1");
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "- Friend2");
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "- Friend3");
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "- Friend4");
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "- Friend5");
+                                player.sendMessage(Messages.getChatColor() + "=== My Friends ===");
+                                player.sendMessage(Messages.getChatColor() + "- Friend1");
+                                player.sendMessage(Messages.getChatColor() + "- Friend2");
+                                player.sendMessage(Messages.getChatColor() + "- Friend3");
+                                player.sendMessage(Messages.getChatColor() + "- Friend4");
+                                player.sendMessage(Messages.getChatColor() + "- Friend5");
                             } else {
-                                NoPermsFunction.noPerms(player);
+                                Messages.noPerms(player);
                             }
                         }
                     }
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }

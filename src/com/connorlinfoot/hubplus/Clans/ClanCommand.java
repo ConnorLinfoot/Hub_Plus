@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Clans;
 
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,11 +24,11 @@ public class ClanCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (player.hasPermission("hubplus.clan")) {
                     if (args.length == 0) {
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "=== Clans Beta, Provided as part of Hub Plus ===");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan create <name> - Create a clan");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan join <name> - Join a clan");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan invite <player> - Invite player to clan");
-                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan info - View information on your clan");
+                        player.sendMessage(Messages.getChatColor() + "=== Clans Beta, Provided as part of Hub Plus ===");
+                        player.sendMessage(Messages.getChatColor() + "/clan create <name> - Create a clan");
+                        player.sendMessage(Messages.getChatColor() + "/clan join <name> - Join a clan");
+                        player.sendMessage(Messages.getChatColor() + "/clan invite <player> - Invite player to clan");
+                        player.sendMessage(Messages.getChatColor() + "/clan info - View information on your clan");
                     } else {
                         if (args[0].equalsIgnoreCase("info")) {
                             if (player.hasPermission("hubplus.clan.info")) {
@@ -45,17 +45,17 @@ public class ClanCommand implements CommandExecutor {
                                         }
                                         String clanName = builder.toString();
                                         if (clanName == null || getPoints(clanName) == null) {
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "That clan does not exist!");
+                                            player.sendMessage(Messages.getChatColor() + "That clan does not exist!");
                                         } else {
                                             // Clan Name is already set
                                             Integer points = getPoints(clanName); // get points
                                             String created = getCreated(clanName); // get created
                                             Integer members = getClanMembersCount(clanName); // get members
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "====== Clan Info ======");
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Name: " + clanName);
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Points: " + points);
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Created: " + created);
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Members: " + members + "/" + instance.getConfig().getInt("Clan Member Limit"));
+                                            player.sendMessage(Messages.getChatColor() + "====== Clan Info ======");
+                                            player.sendMessage(Messages.getChatColor() + "Name: " + clanName);
+                                            player.sendMessage(Messages.getChatColor() + "Points: " + points);
+                                            player.sendMessage(Messages.getChatColor() + "Created: " + created);
+                                            player.sendMessage(Messages.getChatColor() + "Members: " + members + "/" + instance.getConfig().getInt("Clan Member Limit"));
                                             // Things to be added soon!
                                             //player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Owner: Unknown!");
                                             //player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Level: Coming Soon!");
@@ -64,27 +64,27 @@ public class ClanCommand implements CommandExecutor {
                                 } else {
                                     String clanName = getClan(player);
                                     if (clanName == null) {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are not part of a clan!");
+                                        player.sendMessage(Messages.getChatColor() + "You are not part of a clan!");
                                     } else {
                                         String owner = getOwner(clanName);
                                         String uuid = String.valueOf(player.getUniqueId());
                                         Integer points = getPoints(clanName); // get points
                                         String created = getCreated(clanName); // get created
                                         Integer members = getClanMembersCount(clanName); // get members
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "====== Clan Info ======");
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Name: " + clanName);
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Points: " + points);
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Created: " + created);
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Members: " + members + "/" + instance.getConfig().getInt("Clan Member Limit"));
+                                        player.sendMessage(Messages.getChatColor() + "====== Clan Info ======");
+                                        player.sendMessage(Messages.getChatColor() + "Name: " + clanName);
+                                        player.sendMessage(Messages.getChatColor() + "Points: " + points);
+                                        player.sendMessage(Messages.getChatColor() + "Created: " + created);
+                                        player.sendMessage(Messages.getChatColor() + "Members: " + members + "/" + instance.getConfig().getInt("Clan Member Limit"));
 
                                         if (owner.equalsIgnoreCase(uuid)) {
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are the clan owner!");
+                                            player.sendMessage(Messages.getChatColor() + "You are the clan owner!");
                                         }
                                         //player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Level: Coming Soon!");
                                     }
                                 }
                             } else {
-                                NoPermsFunction.noPerms(player);
+                                Messages.noPerms(player);
                             }
                         } else if (args[0].equalsIgnoreCase("leave")) {
                             if (args.length == 2 && args[1].equalsIgnoreCase("confirm")){
@@ -94,28 +94,28 @@ public class ClanCommand implements CommandExecutor {
                                 String uuid = String.valueOf(player.getUniqueId());
                                 if (owner.equalsIgnoreCase(uuid)) {
                                     deleteClan(clanName);
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "The clan " + clanName + " has been deleted!");
+                                    player.sendMessage(Messages.getChatColor() + "The clan " + clanName + " has been deleted!");
                                 }
                             } else{
                                 String clanName = getClan(player);
                                 if (clanName == null) {
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are not part of a clan!");
+                                    player.sendMessage(Messages.getChatColor() + "You are not part of a clan!");
                                 } else {
                                     // Check if user leaving is Clan owner
                                     String owner = getOwner(clanName);
                                     String uuid = String.valueOf(player.getUniqueId());
                                     if (owner.equalsIgnoreCase(uuid)) {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are the owner of " + clanName + ", confirming will DELETE your clan.");
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Do '/clan leave confirm' if you wish to continue!");
+                                        player.sendMessage(Messages.getChatColor() + "You are the owner of " + clanName + ", confirming will DELETE your clan.");
+                                        player.sendMessage(Messages.getChatColor() + "Do '/clan leave confirm' if you wish to continue!");
                                     } else {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "If you are you sure you want to leave the clan " + clanName + ", do /clan leave confirm");
+                                        player.sendMessage(Messages.getChatColor() + "If you are you sure you want to leave the clan " + clanName + ", do /clan leave confirm");
                                     }
                                 }
                             }
                         } else if (args[0].equalsIgnoreCase("create")) {
                             if( player.hasPermission("hubplus.clan.create")) {
                                 if (args.length == 1) {
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan create <name>");
+                                    player.sendMessage(Messages.getChatColor() + "/clan create <name>");
                                 } else {
                                     StringBuilder builder = new StringBuilder();
                                     Integer i = 0;
@@ -131,12 +131,12 @@ public class ClanCommand implements CommandExecutor {
                                     givePoints(player, points); // Gives points on clan creation!
                                 }
                             } else {
-                                NoPermsFunction.noPerms(player);
+                                Messages.noPerms(player);
                             }
                         } else if( args[0].equalsIgnoreCase("join")){
                             if( player.hasPermission("hubplus.clan.join")) {
                                 if (args.length == 1) {
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan join <name>");
+                                    player.sendMessage(Messages.getChatColor() + "/clan join <name>");
                                 } else {
                                     //String name = args[1];
                                     StringBuilder builder = new StringBuilder();
@@ -151,38 +151,38 @@ public class ClanCommand implements CommandExecutor {
                                     joinClan(name, player, 0);
                                 }
                             } else {
-                                NoPermsFunction.noPerms(player);
+                                Messages.noPerms(player);
                             }
                         } else if( args[0].equalsIgnoreCase("invite") ){
                             if( args.length == 1){
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan invite <username>");
+                                player.sendMessage(Messages.getChatColor() + "/clan invite <username>");
                             } else {
                                 String clanName = getClan(player);
                                 String owner = getOwner(clanName);
                                 String uuid = String.valueOf(player.getUniqueId());
                                 if (clanName == null || !owner.equalsIgnoreCase(uuid)) {
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are not part of a clan or the owner of the clan!");
+                                    player.sendMessage(Messages.getChatColor() + "You are not part of a clan or the owner of the clan!");
                                 } else {
                                     Player p = instance.getServer().getPlayer(args[1]);
                                     if (p == null) {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Player not found!");
+                                        player.sendMessage(Messages.getChatColor() + "Player not found!");
                                     } else {
                                         if(player.getName().equalsIgnoreCase(p.getName())){
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You can't invite yourself!");
+                                            player.sendMessage(Messages.getChatColor() + "You can't invite yourself!");
                                         } else {
                                             inviteClan(clanName, p);
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You invited " + p.getDisplayName() + " to your clan!" );
-                                            p.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + player.getDisplayName() + " has invited you to join there clan, " + clanName);
+                                            player.sendMessage(Messages.getChatColor() + "You invited " + p.getDisplayName() + " to your clan!" );
+                                            p.sendMessage(Messages.getChatColor() + player.getDisplayName() + " has invited you to join there clan, " + clanName);
                                         }
                                     }
                                 }
                             }
                         } else if( args[0].equalsIgnoreCase("settings") ){
                             if( args.length == 1) {
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan settings owner <Player> - Change Clan Owner");
+                                player.sendMessage(Messages.getChatColor() + "/clan settings owner <Player> - Change Clan Owner");
                             } else if( args.length == 2 ){
                                 if(args[1].equalsIgnoreCase("owner")){
-                                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "/clan settings owner <Player>");
+                                    player.sendMessage(Messages.getChatColor() + "/clan settings owner <Player>");
                                 }
                             } else if( args.length == 3 ){
                                 if(args[1].equalsIgnoreCase("owner")){
@@ -191,16 +191,16 @@ public class ClanCommand implements CommandExecutor {
                                     String owner = getOwner(clanName);
                                     String uuid = String.valueOf(player.getUniqueId());
                                     if (clanName == null || !owner.equalsIgnoreCase(uuid)) {
-                                        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are not part of a clan or the owner of the clan!");
+                                        player.sendMessage(Messages.getChatColor() + "You are not part of a clan or the owner of the clan!");
                                     } else {
                                         Player p = instance.getServer().getPlayer(args[2]);
                                         if (p == null) {
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Player not found!");
+                                            player.sendMessage(Messages.getChatColor() + "Player not found!");
                                         } else {
                                             // Owner Change here
                                             String newuuid = String.valueOf(p.getUniqueId());
                                             setOwner(clanName, newuuid);
-                                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Owner is now " + p.getDisplayName());
+                                            player.sendMessage(Messages.getChatColor() + "Owner is now " + p.getDisplayName());
                                         }
                                     }
                                 }
@@ -208,7 +208,7 @@ public class ClanCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }
@@ -233,10 +233,10 @@ public class ClanCommand implements CommandExecutor {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have created the clan " + name);
+            player.sendMessage(Messages.getChatColor() + "You have created the clan " + name);
             joinClan(name, player, 1);
         } else {
-            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are already in a clan! Do /clan leave!");
+            player.sendMessage(Messages.getChatColor() + "You are already in a clan! Do /clan leave!");
         }
         return "";
     }
@@ -255,7 +255,7 @@ public class ClanCommand implements CommandExecutor {
             String clanName = getClan(player);
             if( clanName == null ) {
                 if( checkClanMembersCount(name) ){
-                    player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "This clan has reached the limit of " + instance.getConfig().getInt("Clan Member Limit") + " players!");
+                    player.sendMessage(Messages.getChatColor() + "This clan has reached the limit of " + instance.getConfig().getInt("Clan Member Limit") + " players!");
                 } else {
                     if (created == 0) {
                         Integer open = getOpen(name);
@@ -270,9 +270,9 @@ public class ClanCommand implements CommandExecutor {
                                     e.printStackTrace();
                                 }
                                 deleteClanInvites(player);
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have joined the clan " + name);
+                                player.sendMessage(Messages.getChatColor() + "You have joined the clan " + name);
                             } else {
-                                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You must be invited to join this clan!");
+                                player.sendMessage(Messages.getChatColor() + "You must be invited to join this clan!");
                             }
                         } else {
                             // Clan is open so player can join!
@@ -282,7 +282,7 @@ public class ClanCommand implements CommandExecutor {
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-                            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have joined the clan " + name);
+                            player.sendMessage(Messages.getChatColor() + "You have joined the clan " + name);
                         }
                     } else {
                         // Clan has just been created so must be adding owner!
@@ -295,10 +295,10 @@ public class ClanCommand implements CommandExecutor {
                     }
                 }
             } else {
-                player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You are already in a clan! Do /clan leave!");
+                player.sendMessage(Messages.getChatColor() + "You are already in a clan! Do /clan leave!");
             }
         } else {
-            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + name + " doesn't exist!");
+            player.sendMessage(Messages.getChatColor() + name + " doesn't exist!");
         }
         return "";
     }
@@ -323,7 +323,7 @@ public class ClanCommand implements CommandExecutor {
                 }
             }
         } else {
-            player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + name + " doesn't exist!");
+            player.sendMessage(Messages.getChatColor() + name + " doesn't exist!");
         }
         return "";
     }
@@ -344,7 +344,7 @@ public class ClanCommand implements CommandExecutor {
             e.printStackTrace();
         }
 
-        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have left the clan!");
+        player.sendMessage(Messages.getChatColor() + "You have left the clan!");
 
         return "";
     }
@@ -439,7 +439,7 @@ public class ClanCommand implements CommandExecutor {
             e.printStackTrace();
         }
 
-        player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "You have left the clan!");
+        player.sendMessage(Messages.getChatColor() + "You have left the clan!");
 
         return "";
     }

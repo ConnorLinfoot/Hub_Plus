@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +17,7 @@ public class PluginsCommand implements Listener {
         Player player = event.getPlayer();
         if( test.equals( "/plugins" ) && instance.getConfig().getString("Disable Plugins Command").equals("true")) {
             event.setCancelled(true);
-            NoPermsFunction.noPerms(player);
+            Messages.noPerms(player);
         }
     }
 }

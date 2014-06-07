@@ -1,6 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -22,7 +22,7 @@ public class GameModeCommands  implements CommandExecutor {
                 if( player.hasPermission("hubplus.gamemode.creative") ) {
                     player.setGameMode(GameMode.CREATIVE);
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         } else if( label.equalsIgnoreCase( "gms" ) ){
@@ -33,7 +33,7 @@ public class GameModeCommands  implements CommandExecutor {
                 if( player.hasPermission("hubplus.gamemode.survival") ) {
                     player.setGameMode(GameMode.SURVIVAL);
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         } else if( label.equalsIgnoreCase( "gma" ) ){
@@ -44,7 +44,7 @@ public class GameModeCommands  implements CommandExecutor {
                 if( player.hasPermission("hubplus.gamemode.adventure") ) {
                     player.setGameMode(GameMode.ADVENTURE);
                 } else {
-                    NoPermsFunction.noPerms(player);
+                    Messages.noPerms(player);
                 }
             }
         }

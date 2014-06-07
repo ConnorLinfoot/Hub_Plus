@@ -1,7 +1,7 @@
 package com.connorlinfoot.hubplus.Commands;
 
 import com.connorlinfoot.hubplus.Global.HubFunction;
-import com.connorlinfoot.hubplus.Global.NoPermsFunction;
+import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,7 @@ public class CustomHubCommand implements Listener {
             if( player.hasPermission( "hubplus.hub" ) ) {
                 HubFunction.goToHub(player);
             } else {
-                NoPermsFunction.noPerms(player);
+                Messages.noPerms(player);
             }
             event.setCancelled(true);
         }
