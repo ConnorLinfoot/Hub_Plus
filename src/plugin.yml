@@ -1,7 +1,7 @@
 name: Hub Plus
 description: Hub
 main: com.connorlinfoot.hubplus.HubPlus
-version: 0.4
+version: 0.5
 commands:
   hubplus:
     description: HubPlus Main Command
@@ -23,6 +23,8 @@ commands:
     description: Fly command
   heal:
     description: Heal command
+  friend:
+    description: Freind command
 permissions:
   hubplus.hub:
     description: Allow users to use /hub command
@@ -77,4 +79,7 @@ permissions:
     default: op
   hubplus.clan.join:
     description: Access to /clan join command
+    default: op
+  hubplus.ride:
+    description: Allow a player to right click another player to ride
     default: op

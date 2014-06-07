@@ -1,5 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -9,9 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-/**
- * Created by Connor.Linfoot on 21/05/14.
- */
 public class HubPlusCommand implements CommandExecutor {
 
     @Override
@@ -45,22 +43,24 @@ public class HubPlusCommand implements CommandExecutor {
                             double zlocation = location.getZ();
                             double locationYaw = location.getYaw();
                             double locationPitch = location.getPitch();
+                            String hubworld = location.getWorld().getName();
                             instance.getConfig().set("Hub TP X", xlocation);
                             instance.getConfig().set("Hub TP Y", ylocation);
                             instance.getConfig().set("Hub TP Z", zlocation);
                             instance.getConfig().set("Hub TP Yaw", locationYaw);
                             instance.getConfig().set("Hub TP Pitch", locationPitch);
+                            instance.getConfig().set("Hub TP World", hubworld);
                             instance.saveConfig();
                             player.sendMessage(ChatColor.GREEN + "Hub Point Set!");
                         } else {
-                            HubPlus.noPerms(player);
+                            NoPermsFunction.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "reload" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
                             instance.reloadConfig();
                             player.sendMessage( "Hub Plus Config Reloaded!" );
                         } else {
-                            HubPlus.noPerms(player);
+                            NoPermsFunction.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "stats" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
@@ -77,7 +77,7 @@ public class HubPlusCommand implements CommandExecutor {
                                 player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus stats <enable/disable>" );
                             }
                         } else {
-                            HubPlus.noPerms(player);
+                            NoPermsFunction.noPerms(player);
                         }
                     } else if( args[0].equalsIgnoreCase( "clockcooldown" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
@@ -91,11 +91,11 @@ public class HubPlusCommand implements CommandExecutor {
                                 player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus clockcooldown <seconds>" );
                             }
                         } else {
-                            HubPlus.noPerms(player);
+                            NoPermsFunction.noPerms(player);
                         }
                     }
                 } else {
-                    HubPlus.noPerms(player);
+                    NoPermsFunction.noPerms(player);
                 }
             }
         }

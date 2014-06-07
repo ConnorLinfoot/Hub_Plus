@@ -1,5 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -8,9 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-/**
- * Created by Connor.Linfoot on 20/05/14.
- */
 public class BroadcastCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -35,7 +33,7 @@ public class BroadcastCommand implements CommandExecutor {
                         //player.sendMessage("");
                     }
                 } else {
-                    HubPlus.noPerms(player);
+                    NoPermsFunction.noPerms(player);
                 }
             }
 

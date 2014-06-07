@@ -1,5 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +26,7 @@ public class HealCommand implements CommandExecutor{
                     player.setFoodLevel(20);
                     player.sendMessage("You have been healed!");
                 } else {
-                    HubPlus.noPerms(player);
+                    NoPermsFunction.noPerms(player);
                 }
             }
         }

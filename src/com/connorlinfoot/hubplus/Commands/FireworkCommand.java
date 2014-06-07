@@ -1,5 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -41,10 +42,17 @@ public class FireworkCommand implements CommandExecutor {
                         String launch = ChatColor.GREEN + "You launched a firework!";
                         player.sendMessage(formatVariables(launch, player));
                     } else {
-                        player.sendMessage(ChatColor.GREEN + "You must wait " + instance.getConfig().getInt("Firework Cooldown") +  " seconds between fireworks!");
+                        Integer cooldown = instance.getConfig().getInt("Firework Cooldown");
+                        String cooldownstring = "";
+                        if( cooldown >= 2 ){
+                            cooldownstring = "seconds";
+                        } else {
+                            cooldownstring = "second";
+                        }
+                        player.sendMessage(ChatColor.GREEN + "You must wait " + cooldown +  " " + cooldownstring + " between fireworks!");
                     }
                 } else {
-                    HubPlus.noPerms(player);
+                    NoPermsFunction.noPerms(player);
                 }
             }
         }

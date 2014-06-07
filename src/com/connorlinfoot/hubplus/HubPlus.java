@@ -2,11 +2,14 @@ package com.connorlinfoot.hubplus;
 
 import com.connorlinfoot.hubplus.Clans.ClanCommand;
 import com.connorlinfoot.hubplus.Commands.*;
+import com.connorlinfoot.hubplus.Friends.FriendCommand;
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
 import com.connorlinfoot.hubplus.Player.BloodEffect;
 import com.connorlinfoot.hubplus.Player.LaunchPads;
 import com.connorlinfoot.hubplus.Player.PlayerListener;
+import com.connorlinfoot.hubplus.Player.Rider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -55,13 +58,17 @@ public class HubPlus extends JavaPlugin implements Listener {
             }
         }
 
-        if(instance.getConfig().getString("Clans Enabled").equals("true")) {
+        if(instance.getConfig().getString("Clans Enabled").equals("true") || instance.getConfig().getString("Friends Enabled").equals("true")) {
             c = MySQL.openConnection();
 
             if( c == null ){
-                console.sendMessage(ChatColor.RED + "Hub Plus Failed To Start, Check Your MySQL Settings or Disable Clans!");
+                console.sendMessage(ChatColor.RED + "Hub Plus Failed To Start, Check Your MySQL Settings or Disable Clans + Friends!");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
+
+        }
+
+        if(instance.getConfig().getString("Clans Enabled").equals("true")){
             Statement statement = null;
             try {
                 statement = c.createStatement();
@@ -70,6 +77,7 @@ public class HubPlus extends JavaPlugin implements Listener {
             }
 
             try {
+                assert statement != null;
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Clans(clanID INT NOT NULL AUTO_INCREMENT,name VARCHAR(250), PRIMARY KEY (clanID), points INT, open INT, created DATETIME, owner VARCHAR(250) );");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -86,6 +94,29 @@ public class HubPlus extends JavaPlugin implements Listener {
             }
         }
 
+        if(instance.getConfig().getString("Friends Enabled").equals("true")){
+            Statement statement = null;
+            try {
+                statement = c.createStatement();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                assert statement != null;
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Friends(friendID INT ,friend1 VARCHAR(250), friend2 VARCHAR(250), PRIMARY KEY (friendID), date DATETIME );");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Friend 1 is person sending invite
+            try {
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Friends_Requests(friendID INT ,friend1 VARCHAR(250), friend2 VARCHAR(250), PRIMARY KEY (friendID), date DATETIME );");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         Bukkit.getPluginManager().registerEvents(new ChatSensor(), this);
         Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -93,10 +124,19 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new SignListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new Rider(), this);
 
 
-        if(getConfig().getString("Launch Pads").equals("enabled")){
+        if(getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")){
             Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
+        }
+
+        if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true")){
+            getCommand("clan").setExecutor(new ClanCommand()); // /clan command
+        }
+
+        if(getConfig().getString("Friends Enabled").equalsIgnoreCase("true")){
+            getCommand("friend").setExecutor(new FriendCommand()); // /friend command
         }
 
         // Include Command Classes
@@ -105,13 +145,12 @@ public class HubPlus extends JavaPlugin implements Listener {
         getCommand("hp").setExecutor(new HubPlusCommand()); // /hp Command
         getCommand("broadcast").setExecutor(new BroadcastCommand()); // Broadcast Command
         getCommand("bc").setExecutor(new BroadcastCommand()); // /bc Command
-        getCommand("clan").setExecutor(new ClanCommand()); // /clan command
         getCommand("fw").setExecutor(new FireworkCommand()); // /fw command
         getCommand("fly").setExecutor(new FlyCommand()); // /fly command
         getCommand("heal").setExecutor(new HealCommand()); // /heal command
 
         console.sendMessage(ChatColor.GREEN + "============= HUB PLUS =============");
-        console.sendMessage(ChatColor.GREEN + "=========== VERSION: 0.4 ===========");
+        console.sendMessage(ChatColor.GREEN + "=========== VERSION: 0.5 ===========");
         console.sendMessage(ChatColor.GREEN + "======== BY CONNOR LINFOOT! ========");
     }
 
@@ -126,7 +165,7 @@ public class HubPlus extends JavaPlugin implements Listener {
                 String world = player.getWorld().getName().toLowerCase();
                 player.sendMessage("Current World: " + ChatColor.RED + ChatColor.BOLD + world);
             } else {
-                noPerms(player);
+                NoPermsFunction.noPerms(player);
             }
         }
 
@@ -141,9 +180,5 @@ public class HubPlus extends JavaPlugin implements Listener {
         return c;
     }
 
-    public static String noPerms(Player player){
-        player.sendMessage(ChatColor.RED + "No Permission!");
-        return "";
-    }
 
 }

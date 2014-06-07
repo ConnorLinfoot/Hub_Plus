@@ -1,5 +1,6 @@
 package com.connorlinfoot.hubplus.Commands;
 
+import com.connorlinfoot.hubplus.Global.NoPermsFunction;
 import com.connorlinfoot.hubplus.HubPlus;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +28,7 @@ public class FlyCommand implements CommandExecutor{
                         player.sendMessage("You can now fly!");
                     }
                 } else {
-                    HubPlus.noPerms(player);
+                    NoPermsFunction.noPerms(player);
                 }
             }
         }

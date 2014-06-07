@@ -1,6 +1,5 @@
 #                           Hub Plus
-#                          Version 0.4
-#                     THIS IS A ALPHA BUILD
+#                          Version 0.5
 #                       By Connor Linfoot
 # Please read the documentation available at the link below!
 # http://dev.bukkit.org/bukkit-plugins/hub-plus/
@@ -25,6 +24,11 @@ Launch Pads Top Block: Stone Plate
 Clans Enabled: false
 Clan Member Limit: 8
 Clan Starting Points: 100
+
+Friends Enabled: false
+Friends Limit: 0
+
+
 Database Host: localhost
 Database User: user
 Database Pass: pass
