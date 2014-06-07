@@ -24,8 +24,6 @@ public class ChatSensor implements Listener {
         String[] wordsList = new String[] {"fucking","fucks","fuck","bitch","skets","sket","sluts","slut","bastards","bastard","twat","faggots","faggot","whore","shit","pussy","dicks","dick","cocks","cock","vagina","tits","tit","boobs","boob","penis"};
         bannedWords.addAll(Arrays.asList(wordsList));
 
-        // Future feature, disable for ops or users with hubplus.chat.sensor.bypass permission!
-
         if(instance.getConfig().getString("Chat Sensor").equalsIgnoreCase("replace")){ // Checks if config is set to replace
             for( Object sensor1 : bannedWords ) { // Changes the word into stars
                 String sensor = String.valueOf(sensor1);

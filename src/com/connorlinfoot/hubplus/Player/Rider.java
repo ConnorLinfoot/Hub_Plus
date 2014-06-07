@@ -24,7 +24,7 @@ public class Rider implements Listener {
                 if (player.hasPermission("hubplus.ride")) {
                     //String rider = String.valueOf(player.getPassenger());
                     //Entity riderentity = player.getPassenger();
-                    //if (rider.equals("null")) { // Used for having 2 players riding!
+                    //if (rider.equals("null")) { // Used for having 2 players riding! Seems to currently cause server crash?
                     player.setPassenger(entity);
                     ((Player) entity).sendMessage(ChatColor.getChatColor() + "You are now riding " + player.getDisplayName() + " (Use shift to dismount)");
                     //} else {

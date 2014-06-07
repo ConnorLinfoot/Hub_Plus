@@ -20,6 +20,7 @@ Firework Cooldown: 15
 Launch Pads: enabled
 Launch Pads Bottom Block: Redstone Block
 Launch Pads Top Block: Stone Plate
+Launch Pad Speed: 5
 
 Clans Enabled: false
 Clan Member Limit: 8
