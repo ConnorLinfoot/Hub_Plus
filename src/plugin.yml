@@ -1,5 +1,5 @@
 name: Hub Plus
-description: Hub
+description: Hub Plus is a simple and yet very large Hub plugin. It has multiple features including clans, friends and more!
 main: com.connorlinfoot.hubplus.HubPlus
 version: 0.5
 commands:
