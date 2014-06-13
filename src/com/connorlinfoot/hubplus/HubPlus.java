@@ -58,7 +58,7 @@ public class HubPlus extends JavaPlugin implements Listener {
             getConfig().set("Launch Pads", ""); // Clear old
             saveConfig(); // Save Config
         }
-        
+
         ConsoleCommandSender console = server.getConsoleSender();
         if(getConfig().getString( "Send Stats" ).equals(" true" ) ) {
             try {
@@ -139,6 +139,8 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
 
         if(getConfig().getString("Hide Players Enabled").equalsIgnoreCase("true") || getConfig().getString("Hide Players Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new HidePlayers(), this);
+
+        if(getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("true") || getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerBroadcasts(), this);
 
         if(getConfig().getString("Launch Pads").equalsIgnoreCase("true") || getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
 

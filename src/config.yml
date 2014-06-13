@@ -8,6 +8,7 @@ Config Version: 2
 Protected Worlds: world
 Hub World: world
 
+Broadcasts Enabled: true
 On Join Broadcast: Welcome <playername> to the server!
 On Quit Broadcast: <playername> left the server!
 
