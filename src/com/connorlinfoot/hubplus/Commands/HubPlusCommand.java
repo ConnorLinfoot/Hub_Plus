@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class HubPlusCommand implements CommandExecutor {
@@ -35,6 +36,7 @@ public class HubPlusCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.GREEN + "/broadcast <message> - Send a broadcast to the server.");
                         player.sendMessage(ChatColor.GREEN + "/hubplus help - Shows this screen.");
                         player.sendMessage(ChatColor.GREEN + "/fw - Launches a firework.");
+                        // Work on adding more or making this better?
                     } else if( args[0].equalsIgnoreCase( "sethub" ) ) {
                         if( player.hasPermission( "hubplus.admin" ) ) {
                             Location location = player.getLocation();
@@ -79,19 +81,31 @@ public class HubPlusCommand implements CommandExecutor {
                         } else {
                             Messages.noPerms(player);
                         }
-                    } else if( args[0].equalsIgnoreCase( "clockcooldown" ) ){
+                    } else if( args[0].equalsIgnoreCase( "world" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
-                            if( args.length == 2 ) {
-                                // Enable stats
-                                Integer count = Integer.valueOf(args[1]);
-                                instance.getConfig().set( "Clock Cooldown", count );
-                                player.sendMessage( ChatColor.GREEN + "Clock Cooldown is now set to " + count );
+                            // Will allow user to set hub world right from here
+                        }
+                    } else if( args[0].equalsIgnoreCase( "hideplayers" ) ){
+                        if( player.hasPermission( "hubplus.admin" ) ) {
+                            if( args.length == 2){
+                                // Show info on commands here
                             } else {
-                                // Show Help Message
-                                player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus clockcooldown <seconds>" );
+                                if( args[1].equalsIgnoreCase("cooldown") ){
+                                    if( args.length == 3 ) {
+                                        Integer count = Integer.valueOf(args[1]);
+                                        instance.getConfig().set( "Clock Cooldown", count );
+                                        player.sendMessage( ChatColor.GREEN + "Clock Cooldown is now set to " + count );
+                                    } else {
+                                        // Show Help Message
+                                        player.sendMessage( ChatColor.GREEN + "Please use the command /hubplus hideplayers cooldown <seconds>" );
+                                    }
+                                } else if( args[1].equalsIgnoreCase("item") ){
+                                    // Change item from hand here
+                                    ItemStack item = player.getItemInHand();
+                                    // STILL TO BE COMPLETED
+                                }
                             }
-                        } else {
-                            Messages.noPerms(player);
+                            // Will allow user to edit hide players features such as item, text (Maybe) and cooldown will be moved here
                         }
                     }
                 } else {
