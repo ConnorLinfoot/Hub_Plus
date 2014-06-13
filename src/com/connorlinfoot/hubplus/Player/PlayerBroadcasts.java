@@ -29,5 +29,4 @@ public class PlayerBroadcasts implements Listener {
         String msgnew = msg.replace( "<playername>", player.getDisplayName() );
         event.setQuitMessage(msgnew);
     }
-
 }

@@ -43,40 +43,6 @@ Database User: user
 Database Pass: pass
 Database Name: name
 
-Blood Enabled: false
-Blood Worlds: all
-Blood Entitys:
-  All: true
-  Bat: false
-  Blaze: false
-  Cave Spider: false
-  Chicken: false
-  Cow: false
-  Creeper: false
-  Enderman: false
-  Ghast: false
-  Giant: false
-  Horse: false
-  Iron Golem: false
-  Magma Cube: false
-  Mushroom Cow: false
-  Ocelot: false
-  Pig: false
-  Player: false
-  Sheep: false
-  Silverfish: false
-  Skeleton: false
-  Slime: false
-  Snowman: false
-  Spider: false
-  Squid: false
-  Villager: false
-  Witch: false
-  Wither: false
-  Wolf: false
-  Zombie: false
-  Zombie Pigman: false
-
 DO NOT EDIT: DO NOT EDIT BELOW THIS LINE!
 COMMENT1: Below is config for compass! Ignore this its for the future!
 Compass Rows: 4

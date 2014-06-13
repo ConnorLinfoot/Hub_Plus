@@ -131,7 +131,6 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new ChatSensor(), this);
         Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Bukkit.getPluginManager().registerEvents(new BloodEffect(), this);
         Bukkit.getPluginManager().registerEvents(new SignListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
