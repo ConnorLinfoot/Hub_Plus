@@ -147,7 +147,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin( PlayerJoinEvent event){
         Player player = event.getPlayer();
-        Material material = Material.getMaterial(instance.getConfig().getString("Hide Players Item"));
+        Material material = Material.matchMaterial(instance.getConfig().getString("Hide Players Item"));
         if( material == null) material = Material.WATCH;
         String world =  player.getWorld().getName();
         String currentworld = instance.getConfig().getString("Hub World");
@@ -190,7 +190,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         String world =  player.getWorld().getName();
         String currentworld = instance.getConfig().getString("Hub World");
-        Material material = Material.getMaterial(instance.getConfig().getString("Hide Players Item"));
+        Material material = Material.matchMaterial(instance.getConfig().getString("Hide Players Item"));
         if( material == null) material = Material.WATCH;
         if(world.equals(currentworld)) {
             ItemStack item = null;
