@@ -92,5 +92,4 @@ public class FriendCommand implements CommandExecutor {
     private boolean checkInvited(Player inviter, Player invited){
         return false;
     }
-
 }

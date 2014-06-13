@@ -1,8 +1,10 @@
 package com.connorlinfoot.hubplus;
 
 import com.connorlinfoot.hubplus.Clans.ClanCommand;
+import com.connorlinfoot.hubplus.Clans.onEnableClans;
 import com.connorlinfoot.hubplus.Commands.*;
 import com.connorlinfoot.hubplus.Friends.FriendCommand;
+import com.connorlinfoot.hubplus.Friends.onEnableFriends;
 import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
@@ -22,8 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class HubPlus extends JavaPlugin implements Listener {
@@ -86,57 +86,11 @@ public class HubPlus extends JavaPlugin implements Listener {
                 console.sendMessage(ChatColor.RED + "Hub Plus Failed To Start, Check Your MySQL Settings or Disable Clans + Friends!");
                 Bukkit.getPluginManager().disablePlugin(this);
             }
-
         }
 
-        if(instance.getConfig().getString("Clans Enabled").equals("true")){
-            Statement statement = null;
-            try {
-                statement = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        onEnableClans.onEnableClans();
 
-            try {
-                assert statement != null;
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Clans(clanID INT NOT NULL AUTO_INCREMENT,name VARCHAR(250), PRIMARY KEY (clanID), points INT, open INT, created DATETIME, owner VARCHAR(250) );");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Clans_Players(UUID VARCHAR(250),clanID INT, PRIMARY KEY (UUID) );");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Clans_Invites(UUID VARCHAR(250),clanID INT, PRIMARY KEY (UUID) );");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(instance.getConfig().getString("Friends Enabled").equals("true")){
-            Statement statement = null;
-            try {
-                statement = c.createStatement();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                assert statement != null;
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Friends(friendID INT ,friend1 VARCHAR(250), friend2 VARCHAR(250), PRIMARY KEY (friendID), date DATETIME );");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            // Friend 1 is person sending invite
-            try {
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS HubPlus_Friends_Requests(friendID INT ,friend1 VARCHAR(250), friend2 VARCHAR(250), PRIMARY KEY (friendID), date DATETIME );");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        onEnableFriends.onEnableFriends();
 
         Bukkit.getPluginManager().registerEvents(new ChatSensor(), this);
         Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
