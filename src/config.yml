@@ -7,10 +7,10 @@ Config Version: 2
 
 Protected Worlds: world
 Hub World: world
-Clear Inventory On Join: false
-Clock Cooldown: 3
+
 On Join Broadcast: Welcome <playername> to the server!
 On Quit Broadcast: <playername> left the server!
+
 Hub On Join: true
 Send Stats: true
 Broadcast Prefix: "[HubPlus]"
@@ -18,9 +18,12 @@ Custom Hub Command: lobby
 Disable Plugins Command: false
 Firework Cooldown: 15
 
+Hide Players Enabled: true
 Hide Players Item: watch
+Hide Players Cooldown: 3
+Clear Inventory On Join: false
 
-Launch Pads: enabled
+Launch Pads Enabled: true
 Launch Pads Bottom Block: Redstone Block
 Launch Pads Top Block: Stone Plate
 Launch Pad Speed: 5

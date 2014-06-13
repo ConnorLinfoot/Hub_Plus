@@ -6,10 +6,7 @@ import com.connorlinfoot.hubplus.Friends.FriendCommand;
 import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
-import com.connorlinfoot.hubplus.Player.BloodEffect;
-import com.connorlinfoot.hubplus.Player.LaunchPads;
-import com.connorlinfoot.hubplus.Player.PlayerListener;
-import com.connorlinfoot.hubplus.Player.Rider;
+import com.connorlinfoot.hubplus.Player.*;
 import com.connorlinfoot.hubplus.Scoreboard.Scoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -49,6 +46,19 @@ public class HubPlus extends JavaPlugin implements Listener {
         saveConfig();
         getConfig().options().copyDefaults(true);
         saveConfig();
+
+        if(getConfig().isSet("Clock Cooldown")){ // If using old Clock Cooldown
+            getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
+            getConfig().set("Clock Cooldown", ""); // Clear old
+            saveConfig(); // Save Config
+        }
+
+        if(getConfig().isSet("Launch Pads")){ // If using old Launch Pads
+            getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
+            getConfig().set("Launch Pads", ""); // Clear old
+            saveConfig(); // Save Config
+        }
+        
         ConsoleCommandSender console = server.getConsoleSender();
         if(getConfig().getString( "Send Stats" ).equals(" true" ) ) {
             try {
@@ -128,17 +138,16 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new Rider(), this);
         Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
 
+        if(getConfig().getString("Hide Players Enabled").equalsIgnoreCase("true") || getConfig().getString("Hide Players Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new HidePlayers(), this);
 
-        if(getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")){
-            Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
-        }
+        if(getConfig().getString("Launch Pads").equalsIgnoreCase("true") || getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
 
-        if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true")){
+        if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true") || getConfig().getString("Clans Enabled").equalsIgnoreCase("enabled")){
             getCommand("clan").setExecutor(new ClanCommand()); // /clan command
             getCommand("c").setExecutor(new ClanCommand()); // /clan command
         }
 
-        if(getConfig().getString("Friends Enabled").equalsIgnoreCase("true")){
+        if(getConfig().getString("Friends Enabled").equalsIgnoreCase("true") || getConfig().getString("Friends Enabled").equalsIgnoreCase("enabled")){
             getCommand("friend").setExecutor(new FriendCommand()); // /friend command
             getCommand("f").setExecutor(new FriendCommand()); // /friend command
         }

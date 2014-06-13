@@ -234,7 +234,7 @@ public class PlayerListener implements Listener {
                         d.setPlayer(player);
                         new Thread(d).start();
                     } else {
-                        Integer time = instance.getConfig().getInt("Clock Cooldown");
+                        Integer time = instance.getConfig().getInt("Hide Players Cooldown");
                         String seconds;
                         if (time == 1) {
                             seconds = "second";
@@ -271,7 +271,7 @@ public class PlayerListener implements Listener {
 
         public void run(){
             try{
-                Integer time = instance.getConfig().getInt("Clock Cooldown");
+                Integer time = instance.getConfig().getInt("Hide Players Cooldown");
                 Integer fulltime = time * 1000;
                 Thread.sleep(fulltime);
                 cantUseClock1.remove(player1);
