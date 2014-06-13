@@ -47,6 +47,8 @@ public class HubPlus extends JavaPlugin implements Listener {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
+        ConsoleCommandSender console = server.getConsoleSender();
+
         if(getConfig().isSet("Clock Cooldown")){ // If using old Clock Cooldown
             getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
             getConfig().set("Clock Cooldown", ""); // Clear old
@@ -59,7 +61,13 @@ public class HubPlus extends JavaPlugin implements Listener {
             saveConfig(); // Save Config
         }
 
-        ConsoleCommandSender console = server.getConsoleSender();
+        if(getConfig().isSet("Blood Enabled") && getConfig().getString("Blood Enabled").equals("true")){ // If using blood
+            console.sendMessage("Blood effect has been removed from Hub Plus!");
+            console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
+            getConfig().set("Blood Enabled", ""); // Clear old
+            saveConfig(); // Save Config
+        }
+
         if(getConfig().getString( "Send Stats" ).equals(" true" ) ) {
             try {
                 Metrics metrics = new Metrics(this);
