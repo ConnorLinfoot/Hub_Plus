@@ -18,7 +18,7 @@ public class FriendCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Plugin instance = HubPlus.getInstance();
-        if (label.equalsIgnoreCase("friend") || label.equalsIgnoreCase("friends")) {
+        if (label.equalsIgnoreCase("friend") || label.equalsIgnoreCase("f")) {
             if(instance.getConfig().getString("Friends Enabled").equals("true")) {
                 Player player = (Player) sender;
                 if (player.hasPermission("hubplus.friend")) {

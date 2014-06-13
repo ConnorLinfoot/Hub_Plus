@@ -13,13 +13,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class ClanCommand implements CommandExecutor {
-
+    Plugin instance = HubPlus.getInstance();
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Plugin instance = HubPlus.getInstance();
-        if (label.equalsIgnoreCase("clan") || label.equalsIgnoreCase("clans")) {
+        if (label.equalsIgnoreCase("clan") || label.equalsIgnoreCase("c")) {
             if(instance.getConfig().getString("Clans Enabled").equalsIgnoreCase("true")) {
                 Player player = (Player) sender;
                 if (player.hasPermission("hubplus.clan")) {
@@ -29,6 +30,7 @@ public class ClanCommand implements CommandExecutor {
                         player.sendMessage(Messages.getChatColor() + "/clan join <name> - Join a clan");
                         player.sendMessage(Messages.getChatColor() + "/clan invite <player> - Invite player to clan");
                         player.sendMessage(Messages.getChatColor() + "/clan info - View information on your clan");
+                        player.sendMessage(Messages.getChatColor() + "/clan members - View who's in your clan");
                     } else {
                         if (args[0].equalsIgnoreCase("info")) {
                             if (player.hasPermission("hubplus.clan.info")) {
@@ -197,13 +199,24 @@ public class ClanCommand implements CommandExecutor {
                                         if (p == null) {
                                             player.sendMessage(Messages.getChatColor() + "Player not found!");
                                         } else {
-                                            // Owner Change here
-                                            String newuuid = String.valueOf(p.getUniqueId());
-                                            setOwner(clanName, newuuid);
-                                            player.sendMessage(Messages.getChatColor() + "Owner is now " + p.getDisplayName());
+                                            if( !getClan(p).equalsIgnoreCase(clanName) ){
+                                                player.sendMessage("Player must be in your clan to be owner!");
+                                            } else {
+                                                // Owner Change here
+                                                String newuuid = String.valueOf(p.getUniqueId());
+                                                setOwner(clanName, newuuid);
+                                                player.sendMessage(Messages.getChatColor() + "Owner is now " + p.getDisplayName());
+                                            }
                                         }
                                     }
                                 }
+                            }
+                        } else if( args[0].equalsIgnoreCase("members") ){
+                            String clanName = getClan(player);
+                            if (clanName == null) {
+                                player.sendMessage(Messages.getChatColor() + "You are not part of a clan!");
+                            } else {
+                                listMembers(clanName, player);
                             }
                         }
                     }
@@ -213,6 +226,34 @@ public class ClanCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    private Boolean listMembers(String clanName, Player p){
+        Integer clanId = getClanID(clanName);
+        Statement statement = null;
+        try {
+            //statement = HubPlus.c.createStatement();
+            statement = HubPlus.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ResultSet res;
+        try {
+            assert statement != null;
+            res = statement.executeQuery("SELECT * FROM HubPlus_Clans_Players WHERE clanId = '" + clanId + "';");
+            Integer i = 0;
+            while (res.next()) {
+                if( i == 10 ) break;
+                i++;
+                UUID uuid = UUID.fromString(res.getString("UUID"));
+                p.sendMessage(Messages.getChatColor() + "- " + instance.getServer().getOfflinePlayer(uuid).getName());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     private String createClan(String name, Player player){

@@ -10,6 +10,7 @@ import com.connorlinfoot.hubplus.Player.BloodEffect;
 import com.connorlinfoot.hubplus.Player.LaunchPads;
 import com.connorlinfoot.hubplus.Player.PlayerListener;
 import com.connorlinfoot.hubplus.Player.Rider;
+import com.connorlinfoot.hubplus.Scoreboard.Scoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -125,6 +126,7 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
         Bukkit.getPluginManager().registerEvents(new Rider(), this);
+        Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
 
 
         if(getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")){
@@ -133,10 +135,12 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true")){
             getCommand("clan").setExecutor(new ClanCommand()); // /clan command
+            getCommand("c").setExecutor(new ClanCommand()); // /clan command
         }
 
         if(getConfig().getString("Friends Enabled").equalsIgnoreCase("true")){
             getCommand("friend").setExecutor(new FriendCommand()); // /friend command
+            getCommand("f").setExecutor(new FriendCommand()); // /friend command
         }
 
         // Include Command Classes

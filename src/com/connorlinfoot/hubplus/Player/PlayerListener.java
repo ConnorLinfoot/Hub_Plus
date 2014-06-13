@@ -147,7 +147,8 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin( PlayerJoinEvent event){
         Player player = event.getPlayer();
-
+        Material material = Material.getMaterial(instance.getConfig().getString("Hide Players Item"));
+        if( material == null) material = Material.WATCH;
         String world =  player.getWorld().getName();
         String currentworld = instance.getConfig().getString("Hub World");
         if(world.equals(currentworld)) {
@@ -159,17 +160,18 @@ public class PlayerListener implements Listener {
             }
 
             Inventory inv = player.getInventory();
-            if (inv.contains(Material.WATCH)) {
+            if (inv.contains(material)) {
 
             } else {
-                inventory.addItem(new ItemStack(Material.WATCH));
+                inventory.addItem(new ItemStack(material));
             }
 
 
             for (int n = 0; n < inv.getSize(); n++) { //loop threw all items in the inventory
                 ItemStack itm = inv.getItem(n); //get the items
                 if (itm != null) { //make sure the item is not null, or you'll get a NullPointerException
-                    if (itm.getType().equals(Material.WATCH)) { //if the item equals a contraband item
+
+                    if (itm.getType().equals(material)) { //if the item equals a contraband item
                         ItemMeta imeta = itm.getItemMeta();
                         imeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Hide Players!");
                         List<String> lore = new ArrayList<String>();
@@ -183,22 +185,22 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onClockClick( PlayerInteractEvent event ){
+    public void newOnClockClick( PlayerInteractEvent event ){
         Plugin instance = HubPlus.getInstance();
         Player player = event.getPlayer();
         String world =  player.getWorld().getName();
         String currentworld = instance.getConfig().getString("Hub World");
+        Material material = Material.getMaterial(instance.getConfig().getString("Hide Players Item"));
+        if( material == null) material = Material.WATCH;
         if(world.equals(currentworld)) {
-            String item = "NULL";
-            if (event.hasItem()) {
-                item = String.valueOf(event.getItem().getData());
-            }
-            item = String.valueOf(item);
-            if (!item.equals("NULL") || !item.equals("")) {
-                if (item.equals("WATCH(0)")) {
+            ItemStack item = null;
+            if( event.hasItem() ) item = event.getItem();
+            if( item != null ){
+                Material itemmaterial = item.getType();
+                if( material == itemmaterial){
                     ArrayList hidden = (ArrayList) instance.getConfig().getList("PlayersHiding");
                     ClockCountdown d = new ClockCountdown();
-
+                    event.setCancelled(true);
                     if (!cantUseClock.contains(player)) {
                         if (hidden.contains(player.getName())) {
                             hidden.remove(player.getName());
@@ -240,7 +242,74 @@ public class PlayerListener implements Listener {
                         }
                         player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Please wait " + time + " " + seconds + "!");
                     }
+                }
+            }
+        }
+    }
 
+    /* This is the old onClockClick Function, No Longer Used! */
+    @EventHandler
+    public void onClockClick( PlayerInteractEvent event ){
+        boolean enabled = false;
+        if( enabled ) {
+            Plugin instance = HubPlus.getInstance();
+            Player player = event.getPlayer();
+            String world = player.getWorld().getName();
+            String currentworld = instance.getConfig().getString("Hub World");
+            if (world.equals(currentworld)) {
+                String item = "NULL";
+                if (event.hasItem()) {
+                    item = String.valueOf(event.getItem().getData());
+                }
+                item = String.valueOf(item);
+                if (!item.equals("NULL") || !item.equals("")) {
+                    if (item.equals("WATCH(0)")) {
+                        ArrayList hidden = (ArrayList) instance.getConfig().getList("PlayersHiding");
+                        ClockCountdown d = new ClockCountdown();
+
+                        if (!cantUseClock.contains(player)) {
+                            if (hidden.contains(player.getName())) {
+                                hidden.remove(player.getName());
+                                instance.getConfig().set("PlayersHiding", hidden);
+                                instance.saveConfig();
+                                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                                    player.showPlayer(online);
+                                }
+                                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Players no longer hidden!");
+                                ItemStack inHand = player.getItemInHand();
+                                ItemMeta imeta = inHand.getItemMeta();
+                                imeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Hide Players!");
+                                inHand.setItemMeta(imeta);
+                            } else {
+                                hidden.add(player.getName());
+                                instance.getConfig().set("PlayersHiding", hidden);
+                                instance.saveConfig();
+                                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+                                    player.hidePlayer(online);
+                                }
+                                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Players hidden!");
+                                ItemStack inHand = player.getItemInHand();
+                                ItemMeta imeta = inHand.getItemMeta();
+                                imeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Show Players!");
+                                inHand.setItemMeta(imeta);
+                            }
+
+                            cantUseClock.add(player);
+                            d.setList(cantUseClock);
+                            d.setPlayer(player);
+                            new Thread(d).start();
+                        } else {
+                            Integer time = instance.getConfig().getInt("Clock Cooldown");
+                            String seconds;
+                            if (time == 1) {
+                                seconds = "second";
+                            } else {
+                                seconds = "seconds";
+                            }
+                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Please wait " + time + " " + seconds + "!");
+                        }
+
+                    }
                 }
             }
         }

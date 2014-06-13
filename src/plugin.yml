@@ -31,6 +31,10 @@ commands:
     description: Survival Mode command
   gma:
     description: Adventure Mode command
+  c:
+    description: Clan command
+  f:
+    description: Friend command
 permissions:
   hubplus.hub:
     description: Allow users to use /hub command
