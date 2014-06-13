@@ -33,9 +33,11 @@ public class HubPlus extends JavaPlugin implements Listener {
     String Database_User = getConfig().getString("Database User");
     String Database_Pass = getConfig().getString("Database Pass");
     String Database_Name = getConfig().getString("Database Name");
+    String Database_Port = getConfig().getString("Database Port");
+
     PluginManager pluginmanager = Bukkit.getPluginManager();
     Plugin plugin = pluginmanager.getPlugin("Hub Plus");
-    com.connorlinfoot.hubplus.Other.MySQL MySQL = new MySQL(plugin, Database_Host, "3306", Database_Name, Database_User, Database_Pass);
+    com.connorlinfoot.hubplus.Other.MySQL MySQL = new MySQL(plugin, Database_Host, Database_Port, Database_Name, Database_User, Database_Pass);
     static Connection c = null;
 
     public void onEnable() {
@@ -204,6 +206,4 @@ public class HubPlus extends JavaPlugin implements Listener {
     public static Connection getConnection(){
         return c;
     }
-
-
 }

@@ -42,6 +42,7 @@ Database Host: localhost
 Database User: user
 Database Pass: pass
 Database Name: name
+Database Port: 3306
 
 DO NOT EDIT: DO NOT EDIT BELOW THIS LINE!
 COMMENT1: Below is config for compass! Ignore this its for the future!
