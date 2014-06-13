@@ -247,73 +247,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    /* This is the old onClockClick Function, No Longer Used! */
-    @EventHandler
-    public void onClockClick( PlayerInteractEvent event ){
-        boolean enabled = false;
-        if( enabled ) {
-            Plugin instance = HubPlus.getInstance();
-            Player player = event.getPlayer();
-            String world = player.getWorld().getName();
-            String currentworld = instance.getConfig().getString("Hub World");
-            if (world.equals(currentworld)) {
-                String item = "NULL";
-                if (event.hasItem()) {
-                    item = String.valueOf(event.getItem().getData());
-                }
-                item = String.valueOf(item);
-                if (!item.equals("NULL") || !item.equals("")) {
-                    if (item.equals("WATCH(0)")) {
-                        ArrayList hidden = (ArrayList) instance.getConfig().getList("PlayersHiding");
-                        ClockCountdown d = new ClockCountdown();
-
-                        if (!cantUseClock.contains(player)) {
-                            if (hidden.contains(player.getName())) {
-                                hidden.remove(player.getName());
-                                instance.getConfig().set("PlayersHiding", hidden);
-                                instance.saveConfig();
-                                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
-                                    player.showPlayer(online);
-                                }
-                                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Players no longer hidden!");
-                                ItemStack inHand = player.getItemInHand();
-                                ItemMeta imeta = inHand.getItemMeta();
-                                imeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Hide Players!");
-                                inHand.setItemMeta(imeta);
-                            } else {
-                                hidden.add(player.getName());
-                                instance.getConfig().set("PlayersHiding", hidden);
-                                instance.saveConfig();
-                                for (Player online : Bukkit.getServer().getOnlinePlayers()) {
-                                    player.hidePlayer(online);
-                                }
-                                player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Players hidden!");
-                                ItemStack inHand = player.getItemInHand();
-                                ItemMeta imeta = inHand.getItemMeta();
-                                imeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Show Players!");
-                                inHand.setItemMeta(imeta);
-                            }
-
-                            cantUseClock.add(player);
-                            d.setList(cantUseClock);
-                            d.setPlayer(player);
-                            new Thread(d).start();
-                        } else {
-                            Integer time = instance.getConfig().getInt("Clock Cooldown");
-                            String seconds;
-                            if (time == 1) {
-                                seconds = "second";
-                            } else {
-                                seconds = "seconds";
-                            }
-                            player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Please wait " + time + " " + seconds + "!");
-                        }
-
-                    }
-                }
-            }
-        }
-    }
+    /* Old clock function was here, No Longer Used! */
 
     public String textColors( String msg ){
         msg = msg.replace("&0", ChatColor.BLACK + "" );
