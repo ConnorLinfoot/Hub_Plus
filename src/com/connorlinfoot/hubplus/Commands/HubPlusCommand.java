@@ -83,7 +83,8 @@ public class HubPlusCommand implements CommandExecutor {
                         }
                     } else if( args[0].equalsIgnoreCase( "world" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {
-                            // Will allow user to set hub world right from here
+                            String world = player.getWorld().getName().toLowerCase();
+                            player.sendMessage("Current World: " + ChatColor.RED + ChatColor.BOLD + world);
                         }
                     } else if( args[0].equalsIgnoreCase( "hideplayers" ) ){
                         if( player.hasPermission( "hubplus.admin" ) ) {

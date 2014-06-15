@@ -54,9 +54,6 @@ permissions:
   hubplus.broadcast:
     description: Required to use /broadcast or /bc command
     default: op
-  hubplus.world:
-    description: Required to use /world command
-    default: op
   hubplus.sign.create:
     description: Required to be able to create a Hub sign
     default: op
