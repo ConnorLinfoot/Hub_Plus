@@ -54,26 +54,25 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         ConsoleCommandSender console = server.getConsoleSender();
 
-        if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldown").equals("")){ // If using old Clock Cooldown
-            getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
-            getConfig().set("Clock Cooldown", ""); // Clear old
-            saveConfig(); // Save Config
-        }
-
-        if(getConfig().isSet("Launch Pads") && !getConfig().getString("Launch Pads").equals("")){ // If using old Launch Pads
-            getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
-            getConfig().set("Launch Pads", ""); // Clear old
-            saveConfig(); // Save Config
-        }
-
-        if(getConfig().isSet("Blood Enabled") && !getConfig().getString("Blood Enabled").equals("")){ // If using blood
-            console.sendMessage("Blood effect has been removed from Hub Plus!");
-            console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
-            getConfig().set("Blood Enabled", ""); // Clear old
-            saveConfig(); // Save Config
-        }
-
         if(getConfig().getInt("Config Version") == 2){ // If user has multiple protected worlds
+            if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldown").equals("")){ // If using old Clock Cooldown
+                getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
+                getConfig().set("Clock Cooldown", null); // Clear old
+                saveConfig(); // Save Config
+            }
+
+            if(getConfig().isSet("Launch Pads") && !getConfig().getString("Launch Pads").equals("")){ // If using old Launch Pads
+                getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
+                getConfig().set("Launch Pads", null); // Clear old
+                saveConfig(); // Save Config
+            }
+
+            if(getConfig().isSet("Blood Enabled") && !getConfig().getString("Blood Enabled").equals("")){ // If using blood
+                console.sendMessage("Blood effect has been removed from Hub Plus!");
+                console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
+                getConfig().set("Blood Enabled", null); // Clear old
+                saveConfig(); // Save Config
+            }
             String worlds = null;
             worlds = instance.getConfig().getString("Protected Worlds");
             List<String> worldList = Arrays.asList(worlds.split(","));
