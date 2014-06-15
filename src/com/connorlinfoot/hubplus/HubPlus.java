@@ -25,6 +25,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HubPlus extends JavaPlugin implements Listener {
     private static Plugin instance;
@@ -44,6 +46,7 @@ public class HubPlus extends JavaPlugin implements Listener {
         instance = this;
         Server server = getServer();
         ArrayList hidden = new ArrayList();
+        ArrayList protectedworlds = new ArrayList();
         getConfig().set("PlayersHiding", hidden);
         saveConfig();
         getConfig().options().copyDefaults(true);
@@ -51,7 +54,7 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         ConsoleCommandSender console = server.getConsoleSender();
 
-        if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldow").equals("")){ // If using old Clock Cooldown
+        if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldown").equals("")){ // If using old Clock Cooldown
             getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
             getConfig().set("Clock Cooldown", ""); // Clear old
             saveConfig(); // Save Config
@@ -68,6 +71,19 @@ public class HubPlus extends JavaPlugin implements Listener {
             console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
             getConfig().set("Blood Enabled", ""); // Clear old
             saveConfig(); // Save Config
+        }
+
+        if(getConfig().getInt("Config Version") == 2){ // If user has multiple protected worlds
+            String worlds = null;
+            worlds = instance.getConfig().getString("Protected Worlds");
+            List<String> worldList = Arrays.asList(worlds.split(","));
+            for( String s : worldList){
+                s = s.replace(" ",""); // Strip spaces
+                protectedworlds.add(s);
+            }
+            getConfig().set("Protected Worlds", protectedworlds);
+            getConfig().set("Config Version", 3);
+            saveConfig();
         }
 
         if(getConfig().getString( "Send Stats" ).equals(" true" ) ) {

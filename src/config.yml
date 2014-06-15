@@ -3,9 +3,10 @@
 #                       By Connor Linfoot
 # Please read the documentation available at the link below!
 # http://dev.bukkit.org/bukkit-plugins/hub-plus/
-Config Version: 2
+Config Version: 3
 
-Protected Worlds: world
+Protected Worlds:
+- world
 Hub World: world
 
 Broadcasts Enabled: true
@@ -37,6 +38,7 @@ Clan Starting Points: 100
 Friends Enabled: false
 Friends Limit: 0
 
+Chat Sensor: replace
 
 Database Host: localhost
 Database User: user

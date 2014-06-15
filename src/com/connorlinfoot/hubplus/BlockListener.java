@@ -8,7 +8,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class BlockListener implements Listener {
@@ -21,9 +20,7 @@ public class BlockListener implements Listener {
         String playername = player.getName();
         Material material = event.getBlock().getType();
         String world =  player.getWorld().getName();
-        String worlds = null;
-        worlds = instance.getConfig().getString("Protected Worlds");
-        List<String> worldList = Arrays.asList(worlds.split(","));
+        List<?> worldList = instance.getConfig().getList("Protected Worlds") ;
         if(worldList.contains(world)) {
             if (!player.hasPermission("hubplus.protection.bypass")) {
                 event.setCancelled(true);
@@ -38,9 +35,7 @@ public class BlockListener implements Listener {
         String playername = player.getName();
         Material material = event.getBlock().getType();
         String world =  player.getWorld().getName();
-        String worlds = null;
-        worlds = instance.getConfig().getString("Protected Worlds");
-        List<String> worldList = Arrays.asList(worlds.split(","));
+        List<?> worldList = instance.getConfig().getList("Protected Worlds") ;
         if(worldList.contains(world)) {
             if (!player.hasPermission("hubplus.protection.bypass")) {
                 event.setCancelled(true);
