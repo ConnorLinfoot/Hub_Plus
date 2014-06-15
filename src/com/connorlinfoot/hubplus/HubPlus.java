@@ -51,19 +51,19 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         ConsoleCommandSender console = server.getConsoleSender();
 
-        if(getConfig().isSet("Clock Cooldown")){ // If using old Clock Cooldown
+        if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldow").equals("")){ // If using old Clock Cooldown
             getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
             getConfig().set("Clock Cooldown", ""); // Clear old
             saveConfig(); // Save Config
         }
 
-        if(getConfig().isSet("Launch Pads")){ // If using old Launch Pads
+        if(getConfig().isSet("Launch Pads") && !getConfig().getString("Launch Pads").equals("")){ // If using old Launch Pads
             getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
             getConfig().set("Launch Pads", ""); // Clear old
             saveConfig(); // Save Config
         }
 
-        if(getConfig().isSet("Blood Enabled") && getConfig().getString("Blood Enabled").equals("true")){ // If using blood
+        if(getConfig().isSet("Blood Enabled") && !getConfig().getString("Blood Enabled").equals("")){ // If using blood
             console.sendMessage("Blood effect has been removed from Hub Plus!");
             console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
             getConfig().set("Blood Enabled", ""); // Clear old
@@ -105,7 +105,7 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         if(getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("true") || getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerBroadcasts(), this);
 
-        if(getConfig().getString("Launch Pads").equalsIgnoreCase("true") || getConfig().getString("Launch Pads").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
+        if(getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("true") || getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
 
         if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true") || getConfig().getString("Clans Enabled").equalsIgnoreCase("enabled")){
             getCommand("clan").setExecutor(new ClanCommand()); // /clan command

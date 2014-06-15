@@ -7,8 +7,6 @@ commands:
     description: HubPlus Main Command
   hp:
     description: HubPlus Main Command
-  world:
-    description: Get the world name
   hub:
     description: Go to hub
   broadcast:
