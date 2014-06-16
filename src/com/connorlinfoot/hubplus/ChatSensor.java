@@ -21,7 +21,7 @@ public class ChatSensor implements Listener {
         Player player = event.getPlayer();
         String chat = event.getMessage();
         ArrayList bannedWords = new ArrayList<List>();
-        String[] wordsList = new String[] {"fucking","fucks","fuck","bitch","skets","sket","sluts","slut","bastards","bastard","twat","faggots","faggot","whore","shit","pussy","dicks","dick","cocks","cock","vagina","tits","tit","boobs","boob","penis"};
+        String[] wordsList = new String[] {"fucking","fucks","cunt","fuck","bitch","skets","sket","sluts","slut","bastards","bastard","twat","faggots","faggot","whore","shit","pussy","dicks","dick","cocks","cock","vagina","tits","tit","boobs","boob","penis"};
         bannedWords.addAll(Arrays.asList(wordsList));
 
         if(instance.getConfig().getString("Chat Sensor").equalsIgnoreCase("replace")){ // Checks if config is set to replace
