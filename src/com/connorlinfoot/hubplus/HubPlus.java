@@ -54,36 +54,7 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         ConsoleCommandSender console = server.getConsoleSender();
 
-        if(getConfig().getInt("Config Version") == 2){ // If user has multiple protected worlds
-            if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldown").equals("")){ // If using old Clock Cooldown
-                getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
-                getConfig().set("Clock Cooldown", null); // Clear old
-                saveConfig(); // Save Config
-            }
-
-            if(getConfig().isSet("Launch Pads") && !getConfig().getString("Launch Pads").equals("")){ // If using old Launch Pads
-                getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
-                getConfig().set("Launch Pads", null); // Clear old
-                saveConfig(); // Save Config
-            }
-
-            if(getConfig().isSet("Blood Enabled") && !getConfig().getString("Blood Enabled").equals("")){ // If using blood
-                console.sendMessage("Blood effect has been removed from Hub Plus!");
-                console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
-                getConfig().set("Blood Enabled", null); // Clear old
-                saveConfig(); // Save Config
-            }
-            String worlds = null;
-            worlds = instance.getConfig().getString("Protected Worlds");
-            List<String> worldList = Arrays.asList(worlds.split(","));
-            for( String s : worldList){
-                s = s.replace(" ",""); // Strip spaces
-                protectedworlds.add(s);
-            }
-            getConfig().set("Protected Worlds", protectedworlds);
-            getConfig().set("Config Version", 3);
-            saveConfig();
-        }
+        oldConfigChecks(console, protectedworlds);
 
         if(getConfig().getString( "Send Stats" ).equals(" true" ) ) {
             try {
@@ -107,20 +78,7 @@ public class HubPlus extends JavaPlugin implements Listener {
 
         onEnableFriends.onEnableFriends();
 
-        Bukkit.getPluginManager().registerEvents(new ChatSensor(), this);
-        Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Bukkit.getPluginManager().registerEvents(new SignListener(), this);
-        Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
-        Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
-        Bukkit.getPluginManager().registerEvents(new Rider(), this);
-        Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
-
-        if(getConfig().getString("Hide Players Enabled").equalsIgnoreCase("true") || getConfig().getString("Hide Players Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new HidePlayers(), this);
-
-        if(getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("true") || getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerBroadcasts(), this);
-
-        if(getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("true") || getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
+        registerEvents();
 
         if(getConfig().getString("Clans Enabled").equalsIgnoreCase("true") || getConfig().getString("Clans Enabled").equalsIgnoreCase("enabled")){
             getCommand("clan").setExecutor(new ClanCommand()); // /clan command
@@ -174,5 +132,57 @@ public class HubPlus extends JavaPlugin implements Listener {
 
     public static Connection getConnection(){
         return c;
+    }
+
+    private boolean registerEvents(){
+        if(getConfig().getString("Hide Players Enabled").equalsIgnoreCase("true") || getConfig().getString("Hide Players Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new HidePlayers(), this);
+
+        if(getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("true") || getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerBroadcasts(), this);
+
+        if(getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("true") || getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
+
+        Bukkit.getPluginManager().registerEvents(new ChatSensor(), this);
+        Bukkit.getPluginManager().registerEvents(new BlockListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SignListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
+        Bukkit.getPluginManager().registerEvents(new Rider(), this);
+        Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
+        return true;
+    }
+
+    private boolean oldConfigChecks(ConsoleCommandSender console, List protectedworlds){
+        if(getConfig().getInt("Config Version") == 2){ // If user has multiple protected worlds
+            if(getConfig().isSet("Clock Cooldown") && !getConfig().getString("Clock Cooldown").equals("")){ // If using old Clock Cooldown
+                getConfig().set("Hide Players Cooldown", getConfig().getString("Clock Cooldown")); // Save old as new
+                getConfig().set("Clock Cooldown", null); // Clear old
+                saveConfig(); // Save Config
+            }
+
+            if(getConfig().isSet("Launch Pads") && !getConfig().getString("Launch Pads").equals("")){ // If using old Launch Pads
+                getConfig().set("Launch Pads Enabled", getConfig().getString("Launch Pads")); // Save old as new
+                getConfig().set("Launch Pads", null); // Clear old
+                saveConfig(); // Save Config
+            }
+
+            if(getConfig().isSet("Blood Enabled") && !getConfig().getString("Blood Enabled").equals("")){ // If using blood
+                console.sendMessage("Blood effect has been removed from Hub Plus!");
+                console.sendMessage("Please use 'Minecraft Needs Blood' Plugin!");
+                getConfig().set("Blood Enabled", null); // Clear old
+                saveConfig(); // Save Config
+            }
+            String worlds = null;
+            worlds = instance.getConfig().getString("Protected Worlds");
+            List<String> worldList = Arrays.asList(worlds.split(","));
+            for( String s : worldList){
+                s = s.replace(" ",""); // Strip spaces
+                protectedworlds.add(s);
+            }
+            getConfig().set("Protected Worlds", protectedworlds);
+            getConfig().set("Config Version", 3);
+            saveConfig();
+        }
+        return true;
     }
 }
