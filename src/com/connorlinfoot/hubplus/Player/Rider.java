@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+
 public class Rider implements Listener {
 
     private Plugin instance = HubPlus.getInstance();
@@ -22,14 +24,28 @@ public class Rider implements Listener {
             String currentworld = instance.getConfig().getString("Hub World");
             if(world.equals(currentworld)) {
                 if (player.hasPermission("hubplus.ride")) {
-                    //String rider = String.valueOf(player.getPassenger());
-                    //Entity riderentity = player.getPassenger();
-                    //if (rider.equals("null")) { // Used for having 2 players riding! Seems to currently cause server crash?
-                    player.setPassenger(entity);
-                    ((Player) entity).sendMessage(Messages.getChatColor() + "You are now riding " + player.getDisplayName() + " (Use shift to dismount)");
-                    //} else {
-                        //riderentity.setPassenger(entity);
-                    //}
+                    ArrayList stackerdisabled = (ArrayList) instance.getConfig().getList("PlayersStackerDisabled");
+                    if( !stackerdisabled.contains(((Player) entity).getName())) {
+                        if(!stackerdisabled.contains(player.getName())) {
+                            Entity rider = player.getPassenger();
+                            if( rider == null ) {
+                                //String rider = String.valueOf(player.getPassenger());
+                                //Entity riderentity = player.getPassenger();
+                                //if (rider.equals("null")) { // Used for having 2 players riding! Seems to currently cause server crash?
+                                player.setPassenger(entity);
+                                ((Player) entity).sendMessage(Messages.getChatColor() + "You are now riding " + player.getDisplayName() + " (Use shift to dismount)");
+                                //} else {
+                                //riderentity.setPassenger(entity);
+                                //}
+                            } else {
+                                player.eject();
+                            }
+                        } else {
+                            player.sendMessage("You have stacker disabled!");
+                        }
+                    } else {
+                        player.sendMessage(((Player) entity).getName() + " has stacker disabled!");
+                    }
                 }
             }
         }

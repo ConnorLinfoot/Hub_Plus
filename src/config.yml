@@ -23,6 +23,7 @@ Firework Cooldown: 15
 Hide Players Enabled: true
 Hide Players Item: watch
 Hide Players Cooldown: 3
+Preferences Item: REDSTONE_COMPARATOR
 Clear Inventory On Join: false
 
 Launch Pads Enabled: true
@@ -50,3 +51,4 @@ DO NOT EDIT: DO NOT EDIT BELOW THIS LINE!
 COMMENT1: Below is config for compass! Ignore this its for the future!
 Compass Rows: 4
 PlayersHiding:
+PlayersStackerDisabled:

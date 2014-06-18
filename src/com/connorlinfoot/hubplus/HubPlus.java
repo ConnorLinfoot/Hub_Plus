@@ -46,8 +46,10 @@ public class HubPlus extends JavaPlugin implements Listener {
         instance = this;
         Server server = getServer();
         ArrayList hidden = new ArrayList();
+        ArrayList stackerdisabled = new ArrayList();
         ArrayList protectedworlds = new ArrayList();
         getConfig().set("PlayersHiding", hidden);
+        getConfig().set("PlayersStackerDisabled", stackerdisabled);
         saveConfig();
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -149,6 +151,7 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
         Bukkit.getPluginManager().registerEvents(new Rider(), this);
         Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerPreferences(), this);
         return true;
     }
 

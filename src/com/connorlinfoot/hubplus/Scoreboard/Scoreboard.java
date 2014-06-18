@@ -25,13 +25,12 @@ public class Scoreboard implements Listener {
         Objective obj = board.registerNewObjective("test","dummy");
         obj.setDisplayName("Testing!");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-
         Score score = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Online:"));
         Integer count = instance.getServer().getOnlinePlayers().length;
         player.setScoreboard(board);
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMove( PlayerMoveEvent event ){
         Player player = event.getPlayer();
         ScoreboardManager manager = Bukkit.getScoreboardManager();
@@ -40,12 +39,10 @@ public class Scoreboard implements Listener {
         Objective obj = board.registerNewObjective("test","dummy");
         obj.setDisplayName("Testing!");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-
         Score score = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Online:"));
         Integer count = instance.getServer().getOnlinePlayers().length;
         //Score score = obj.getScore(player);
         //score.setScore((int) player.getHealth());
         player.setScoreboard(board);
-    }
-
+    }*/
 }

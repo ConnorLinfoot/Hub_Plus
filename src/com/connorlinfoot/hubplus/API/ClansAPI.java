@@ -18,7 +18,7 @@ import java.util.UUID;
 * Features are not fully tested!
 * You have been warned!
 *
- */
+*/
 
 public class ClansAPI extends JavaPlugin {
 
@@ -173,4 +173,33 @@ public class ClansAPI extends JavaPlugin {
             return false;
         }
     }
+
+    public static String getOwner(String name){
+        //MySQL Statement to get clan points
+        Statement statement = null;
+        try {
+            //statement = HubPlus.c.createStatement();
+            statement = HubPlus.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ResultSet res;
+        String owner = null;
+        try {
+            assert statement != null;
+            res = statement.executeQuery("SELECT * FROM HubPlus_Clans WHERE name = '" + name + "';");
+            res.next();
+            if( res.getString("owner") == null ){
+                owner = "";
+            } else {
+                owner = res.getString("owner");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return owner;
+    }
+
 }

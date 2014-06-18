@@ -53,13 +53,15 @@ public class ClanCommand implements CommandExecutor {
                                             Integer points = getPoints(clanName); // get points
                                             String created = getCreated(clanName); // get created
                                             Integer members = getClanMembersCount(clanName); // get members
+                                            UUID owner = UUID.fromString(getOwner(clanName));
+                                            String ownername = instance.getServer().getOfflinePlayer(owner).getName();
                                             player.sendMessage(Messages.getChatColor() + "====== Clan Info ======");
                                             player.sendMessage(Messages.getChatColor() + "Name: " + clanName);
                                             player.sendMessage(Messages.getChatColor() + "Points: " + points);
                                             player.sendMessage(Messages.getChatColor() + "Created: " + created);
                                             player.sendMessage(Messages.getChatColor() + "Members: " + members + "/" + instance.getConfig().getInt("Clan Member Limit"));
+                                            player.sendMessage(Messages.getChatColor() + "Owner: " + ownername);
                                             // Things to be added soon!
-                                            //player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Owner: Unknown!");
                                             //player.sendMessage(com.connorlinfoot.hubplus.Global.ChatColor.getChatColor() + "Level: Coming Soon!");
                                         }
                                     }
