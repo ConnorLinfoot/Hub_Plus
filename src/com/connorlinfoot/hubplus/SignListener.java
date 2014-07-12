@@ -24,7 +24,7 @@ public class SignListener implements Listener {
                 event.setLine( 0, ChatColor.GREEN + "[Hub]" );
                 player.sendMessage( "You have just created a Hub TP Sign" );
             } else {
-                event.setLine( 0, ChatColor.RED + "[HubPlus]"  );
+                event.setLine( 0, ChatColor.RED + "[Hub]"  );
                 Messages.noPerms(player);
             }
         }

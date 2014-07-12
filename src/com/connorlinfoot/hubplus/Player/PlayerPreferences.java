@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -43,7 +44,7 @@ public class PlayerPreferences implements Listener {
             if (inv.contains(material)) {
 
             } else {
-                inventory.addItem(new ItemStack(material));
+                inventory.setItem(5,new ItemStack(material));
             }
 
 
@@ -111,61 +112,64 @@ public class PlayerPreferences implements Listener {
     public void onInvDrag( InventoryClickEvent event ){
         Player player = (Player) event.getWhoClicked();
         String world =  player.getWorld().getName();
+        InventoryView inv = player.getOpenInventory();
         String currentworld = instance.getConfig().getString("Hub World");
         ItemStack item = event.getCurrentItem();
-        if( item != null ) {
-            ItemMeta itemmeta = item.getItemMeta();
-            if( itemmeta!= null ) {
-                if( !String.valueOf(itemmeta).equals("UNSPECIFIC_META:{meta-type=UNSPECIFIC}") ) {
-                    String itemname = itemmeta.getDisplayName();
-                    if (world.equals(currentworld)) {
-                        if (itemname.equals("Disable Stacker!")) {
-                            disableStacker(player);
-                            player.closeInventory();
-                            event.setCancelled(true);
-                        } else if (itemname.equals("Enable Stacker!")) {
-                            enableStacker(player);
-                            player.closeInventory();
-                            event.setCancelled(true);
-                        } else if (itemname.equals("Show All Players!")) {
-                            showAllPlayers(player);
-                            player.closeInventory();
-                            event.setCancelled(true);
-                        } else if (itemname.equals("Hide All Players!")) {
-                            hideAllPlayers(player);
-                            player.closeInventory();
-                            event.setCancelled(true);
-                        } else if (itemname.equals("Show Just Friends!")) {
-                            player.closeInventory();
-                            player.sendMessage("Coming Soon!");
-                            event.setCancelled(true);
-                        } else if (itemname.equals("Hide Players!")) {
-                            Inventory menu = instance.getServer().createInventory(player, 36, "Preferences");
-                            ArrayList hidden = (ArrayList) instance.getConfig().getList("PlayersHiding");
-                            // Item 1
-                            ItemStack nitem = new ItemStack(Material.EYE_OF_ENDER);
-                            if( !hidden.contains(player.getName()) ) nitem = new ItemStack(Material.ENDER_PEARL);
-                            ItemMeta meta = nitem.getItemMeta();
-                            meta.setDisplayName("Show All Players!");
-                            nitem.setItemMeta(meta);
-                            menu.setItem(11, nitem);
+        if(inv.getTitle().equals("Preferences")) {
+            if (item != null) {
+                ItemMeta itemmeta = item.getItemMeta();
+                if (itemmeta != null) {
+                    if (!String.valueOf(itemmeta).equals("UNSPECIFIC_META:{meta-type=UNSPECIFIC}")) {
+                        String itemname = itemmeta.getDisplayName();
+                        if (world.equals(currentworld)) {
+                            if (itemname.equals("Disable Stacker!")) {
+                                disableStacker(player);
+                                player.closeInventory();
+                                event.setCancelled(true);
+                            } else if (itemname.equals("Enable Stacker!")) {
+                                enableStacker(player);
+                                player.closeInventory();
+                                event.setCancelled(true);
+                            } else if (itemname.equals("Show All Players!")) {
+                                showAllPlayers(player);
+                                player.closeInventory();
+                                event.setCancelled(true);
+                            } else if (itemname.equals("Hide All Players!")) {
+                                hideAllPlayers(player);
+                                player.closeInventory();
+                                event.setCancelled(true);
+                            } else if (itemname.equals("Show Just Friends!")) {
+                                player.closeInventory();
+                                player.sendMessage("Coming Soon!");
+                                event.setCancelled(true);
+                            } else if (itemname.equals("Hide Players!")) {
+                                Inventory menu = instance.getServer().createInventory(player, 36, "Preferences");
+                                ArrayList hidden = (ArrayList) instance.getConfig().getList("PlayersHiding");
+                                // Item 1
+                                ItemStack nitem = new ItemStack(Material.EYE_OF_ENDER);
+                                if (!hidden.contains(player.getName())) nitem = new ItemStack(Material.ENDER_PEARL);
+                                ItemMeta meta = nitem.getItemMeta();
+                                meta.setDisplayName("Show All Players!");
+                                nitem.setItemMeta(meta);
+                                menu.setItem(11, nitem);
 
-                            // Item 2
-                            nitem = new ItemStack(Material.EYE_OF_ENDER);
-                            if( hidden.contains(player.getName()) ) nitem = new ItemStack(Material.ENDER_PEARL);
-                            meta = nitem.getItemMeta();
-                            meta.setDisplayName("Hide All Players!");
-                            nitem.setItemMeta(meta);
-                            menu.setItem(13, nitem);
+                                // Item 2
+                                nitem = new ItemStack(Material.EYE_OF_ENDER);
+                                if (hidden.contains(player.getName())) nitem = new ItemStack(Material.ENDER_PEARL);
+                                meta = nitem.getItemMeta();
+                                meta.setDisplayName("Hide All Players!");
+                                nitem.setItemMeta(meta);
+                                menu.setItem(13, nitem);
 
-                            // Item 3
-                            nitem = new ItemStack(Material.EYE_OF_ENDER);
-                            meta = nitem.getItemMeta();
-                            meta.setDisplayName("Show Just Friends!");
-                            nitem.setItemMeta(meta);
-                            menu.setItem(15, nitem);
-                            player.openInventory(menu);
-                            event.setCancelled(true);
+                                // Item 3
+                                nitem = new ItemStack(Material.EYE_OF_ENDER);
+                                meta = nitem.getItemMeta();
+                                meta.setDisplayName("Show Just Friends!");
+                                nitem.setItemMeta(meta);
+                                menu.setItem(15, nitem);
+                                player.openInventory(menu);
+                                event.setCancelled(true);
+                            }
                         }
                     }
                 }

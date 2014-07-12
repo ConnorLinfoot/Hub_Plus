@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 
-public class Rider implements Listener {
+public class Stacker implements Listener {
 
     private Plugin instance = HubPlus.getInstance();
 
@@ -50,5 +50,4 @@ public class Rider implements Listener {
             }
         }
     }
-
 }

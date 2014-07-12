@@ -11,6 +11,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class ChatSensor implements Listener {
 
@@ -24,10 +25,17 @@ public class ChatSensor implements Listener {
         String[] wordsList = new String[] {"fucking","fucks","cunt","fuck","bitch","skets","sket","sluts","slut","bastards","bastard","twat","faggots","faggot","whore","shit","pussy","dicks","dick","cocks","cock","vagina","tits","tit","boobs","boob","penis"};
         bannedWords.addAll(Arrays.asList(wordsList));
 
+        ArrayList randomWords = new ArrayList<List>();
+        String[] randomWordsList = new String[] {"apple","pear","love","amazing","onion","grape fruit"};
+        randomWords.addAll(Arrays.asList(randomWordsList));
+
         if(instance.getConfig().getString("Chat Sensor").equalsIgnoreCase("replace")){ // Checks if config is set to replace
             for( Object sensor1 : bannedWords ) { // Changes the word into stars
                 String sensor = String.valueOf(sensor1);
-                chat = chat.replace(sensor, "****" ); // Replaces string with stars
+                if(chat.contains(sensor)){
+                    chat = chat.toLowerCase();
+                }
+                chat = chat.replaceAll(sensor, "****" ); // Replaces string with stars
                 //chat = chat.replace(sensor, ChatColor.MAGIC + "****" + ChatColor.RESET ); // Replaces string with magic
                 event.setMessage(chat); // Return the new sensor message
             }
@@ -40,6 +48,18 @@ public class ChatSensor implements Listener {
                     player.sendMessage(ChatColor.BOLD + "" + ChatColor.RED + "---------------------------------------");
                     event.setCancelled(true); // Stops chat message showing
                 }
+            }
+        } else if(instance.getConfig().getString("Chat Sensor").equalsIgnoreCase("random")){ // Checks if config is set to random
+            for( Object sensor1 : bannedWords ) { // Changes the word into a random word
+                String sensor = String.valueOf(sensor1);
+                Random randomGen = new Random();
+                int index = randomGen.nextInt(randomWords.size());
+                if(chat.contains(sensor)){
+                    chat = chat.toLowerCase();
+                }
+                String word = String.valueOf(randomWords.get(index));
+                chat = chat.replaceAll(sensor, word ); // Replaces string with random word
+                event.setMessage(chat);
             }
         }
     }

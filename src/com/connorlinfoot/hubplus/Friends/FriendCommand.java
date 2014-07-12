@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -91,5 +92,52 @@ public class FriendCommand implements CommandExecutor {
 
     private boolean checkInvited(Player inviter, Player invited){
         return false;
+    }
+
+    private boolean checkFriends(Player player1, Player player2) {
+        Statement statement = null;
+        try {
+            //statement = HubPlus.c.createStatement();
+            statement = HubPlus.getConnection().createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ResultSet res;
+        Integer friendID = null;
+        try {
+            assert statement != null;
+            res = statement.executeQuery("SELECT * FROM HubPlus_Friends WHERE friend1 = '" + player1.getUniqueId() + "' AND friend2 = '" + player2.getUniqueId() + "';");
+
+            res.next();
+            if( res.getString("friendID") == null ){
+                friendID = 0;
+            } else {
+                friendID = res.getInt("friendID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if( friendID == null || friendID == 0 ) {
+            try {
+                assert statement != null;
+                res = statement.executeQuery("SELECT * FROM HubPlus_Friends WHERE friend1 = '" + player2.getUniqueId() + "' AND friend2 = '" + player1.getUniqueId() + "';");
+
+                res.next();
+                if( res.getString("friendID") == null ){
+                    friendID = 0;
+                } else {
+                    friendID = res.getInt("friendID");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if( friendID == null || friendID == 0 ) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

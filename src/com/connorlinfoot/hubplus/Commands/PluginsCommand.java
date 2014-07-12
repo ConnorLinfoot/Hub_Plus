@@ -11,6 +11,8 @@ import org.bukkit.plugin.Plugin;
 public class PluginsCommand implements Listener {
     private Plugin instance = HubPlus.getInstance();
 
+
+    //FIX /PLUGINS 113403hfrehuio
     @EventHandler
     public void command( PlayerCommandPreprocessEvent event ){
         String test = event.getMessage();

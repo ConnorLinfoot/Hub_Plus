@@ -9,7 +9,6 @@ import com.connorlinfoot.hubplus.Global.Messages;
 import com.connorlinfoot.hubplus.Other.Metrics;
 import com.connorlinfoot.hubplus.Other.MySQL;
 import com.connorlinfoot.hubplus.Player.*;
-import com.connorlinfoot.hubplus.Scoreboard.Scoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -139,6 +138,8 @@ public class HubPlus extends JavaPlugin implements Listener {
     private boolean registerEvents(){
         if(getConfig().getString("Hide Players Enabled").equalsIgnoreCase("true") || getConfig().getString("Hide Players Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new HidePlayers(), this);
 
+        if(getConfig().getString("Preferences Enabled").equalsIgnoreCase("true") || getConfig().getString("Preferences Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerPreferences(), this);
+
         if(getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("true") || getConfig().getString("Broadcasts Enabled").equalsIgnoreCase("enabled"))  Bukkit.getPluginManager().registerEvents(new PlayerBroadcasts(), this);
 
         if(getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("true") || getConfig().getString("Launch Pads Enabled").equalsIgnoreCase("enabled")) Bukkit.getPluginManager().registerEvents(new LaunchPads(), this);
@@ -149,9 +150,9 @@ public class HubPlus extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new SignListener(), this);
         Bukkit.getPluginManager().registerEvents(new CustomHubCommand(), this);
         Bukkit.getPluginManager().registerEvents(new PluginsCommand(), this);
-        Bukkit.getPluginManager().registerEvents(new Rider(), this);
-        Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerPreferences(), this);
+        Bukkit.getPluginManager().registerEvents(new Stacker(), this);
+        Bukkit.getPluginManager().registerEvents(new DoubleJump(), this);
+        //Bukkit.getPluginManager().registerEvents(new Scoreboard(), this);
         return true;
     }
 

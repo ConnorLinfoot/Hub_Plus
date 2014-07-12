@@ -87,7 +87,7 @@ public class LaunchPads implements Listener {
             String world =  player.getWorld().getName();
             String hubworld = instance.getConfig().getString("Hub World");
             if(world.equalsIgnoreCase(hubworld)) {
-                //event.setCancelled(true);
+                event.setCancelled(true);
             }
         }
     }

@@ -23,7 +23,10 @@ Firework Cooldown: 15
 Hide Players Enabled: true
 Hide Players Item: watch
 Hide Players Cooldown: 3
+
+Preferences Enabled: true
 Preferences Item: REDSTONE_COMPARATOR
+
 Clear Inventory On Join: false
 
 Launch Pads Enabled: true
@@ -31,6 +34,9 @@ Launch Pads Bottom Block: Redstone Block
 Launch Pads Top Block: Stone Plate
 Launch Pad Speed: 5
 
+Double Jump Enabled: true
+
+Lock Fly To Hub: true
 
 Clans Enabled: false
 Clan Member Limit: 8
@@ -48,7 +54,5 @@ Database Name: name
 Database Port: 3306
 
 DO NOT EDIT: DO NOT EDIT BELOW THIS LINE!
-COMMENT1: Below is config for compass! Ignore this its for the future!
-Compass Rows: 4
 PlayersHiding:
 PlayersStackerDisabled:
